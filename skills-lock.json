@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "skills": {
+    "database-migration": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/framework-migration/skills/database-migration/SKILL.md",
+      "computedHash": "1ad0f4a5b20a21e2114a4f32e014bc9f4fe528fda612c39433fe82ed245ee0df"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "4eabc66183767153e404b39d1b839b1c37f2d82d86f0a0d7e880a579d8d62336"
+    },
+    "nestjs-best-practices": {
+      "source": "kadajett/agent-nestjs-skills",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "fff896300fe25d6d2e41161da12a5b05d0d57a8adb2390c72fbb7a72e0d02440"
+    },
+    "nextjs-app-router-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/frontend-mobile-development/skills/nextjs-app-router-patterns/SKILL.md",
+      "computedHash": "b4fea42eecf1f803155ef7fa133d5286ee8f2dbba3e616954e9e43c6f0ffc144"
+    },
+    "prisma-database-setup": {
+      "source": "prisma/skills",
+      "sourceType": "github",
+      "skillPath": "prisma-database-setup/SKILL.md",
+      "computedHash": "6a991a2530a6da7131e3fc71c353e8278702d0146b8b6e1d2fdfc2d3d0a21bd2"
+    },
+    "tailwind-design-system": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/frontend-mobile-development/skills/tailwind-design-system/SKILL.md",
+      "computedHash": "cd61afd28f594e8b6712b61749209cbb4466e3eec4e4223793bbd97fc85c1b63"
+    }
+  }
+}

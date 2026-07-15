@@ -1,0 +1,67 @@
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated"
+}
+
+model Item {
+  id          String         @id @default(uuid())
+  name        String         @unique
+  type        String         // e.g., KEY, CURRENCY, EQUIPMENT, TECH_PART
+  description String?
+  stats       String?        // For future damage calculator effects (stringified JSON, e.g. '{"atk": 100}', compatible with MySQL 5.6)
+  yields      MonthlyYield[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model Source {
+  id          String         @id @default(uuid())
+  name        String         @unique
+  type        String         // e.g., DAILY, WEEKLY, EVENT, PERMANENT
+  description String?
+  yields      MonthlyYield[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model GameEvent {
+  id        String         @id @default(uuid())
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  rewards   String?        // JSON summary string of rewards
+  yields    MonthlyYield[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model MonthlyYield {
+  id        String     @id @default(uuid())
+  itemId    String
+  item      Item       @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  sourceId  String
+  source    Source     @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  eventId   String?
+  event     GameEvent? @relation(fields: [eventId], references: [id], onDelete: SetNull)
+  amount    Int
+  month     Int        // 1-12
+  year      Int        // e.g., 2026
+  notes     String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@unique([itemId, sourceId, month, year])
+}
+
+model Menu {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  path      String
+  sort      Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
