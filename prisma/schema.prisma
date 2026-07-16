@@ -22,6 +22,8 @@ model Source {
   id          String         @id @default(uuid())
   name        String         @unique
   type        String         // e.g., DAILY, WEEKLY, EVENT, PERMANENT
+  category    String         // e.g. "广告", "日常挑战", "回响之战"
+  subcategory String?        // e.g. "每日", "每周", "每月" (null if none)
   description String?
   yields      MonthlyYield[]
   createdAt   DateTime       @default(now())
@@ -57,11 +59,45 @@ model MonthlyYield {
   @@unique([itemId, sourceId, month, year])
 }
 
-model Menu {
+model User {
   id        String   @id @default(uuid())
-  name      String   @unique
-  path      String
-  sort      Int      @default(0)
+  username  String   @unique
+  password  String   // Hashed password using bcrypt
+  roleId    String
+  role      Role     @relation(fields: [roleId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Role {
+  id          String       @id @default(uuid())
+  name        String       @unique // e.g. "超级博主", "录入助理"
+  code        String       @unique // e.g. "ADMIN", "ASSISTANT"
+  users       User[]
+  permissions Permission[] @relation("RolePermissions")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Permission {
+  id        String   @id @default(uuid())
+  name      String   @unique // e.g. "创建物品"
+  code      String   @unique // e.g. "item:create"
+  type      String   // e.g. "PAGE", "BUTTON", "API"
+  roles     Role[]   @relation("RolePermissions")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Menu {
+  id             String   @id @default(uuid())
+  name           String   @unique
+  path           String?  // Can be null if it's a folder (e.g. '资产产出目录')
+  sort           Int      @default(0)
+  parentId       String?
+  parent         Menu?    @relation("MenuToMenu", fields: [parentId], references: [id], onDelete: Cascade)
+  children       Menu[]   @relation("MenuToMenu")
+  permissionCode String?  // Code of permission required to view this menu (null if public)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

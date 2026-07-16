@@ -11,14 +11,17 @@ import {
 import { MenusService } from './menus.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
-import { ApiKeyGuard } from '../common/guards/api-key.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { PermissionsGuard } from '../auth/permissions.guard';
+import { RequirePermission } from '../auth/require-permission.decorator';
 
 @Controller('menus')
 export class MenusController {
   constructor(private readonly menusService: MenusService) {}
 
   @Post()
-  @UseGuards(ApiKeyGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('menu:manage')
   create(@Body() createMenuDto: CreateMenuDto) {
     return this.menusService.create(createMenuDto);
   }
@@ -34,13 +37,15 @@ export class MenusController {
   }
 
   @Patch(':id')
-  @UseGuards(ApiKeyGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('menu:manage')
   update(@Param('id') id: string, @Body() updateMenuDto: UpdateMenuDto) {
     return this.menusService.update(id, updateMenuDto);
   }
 
   @Delete(':id')
-  @UseGuards(ApiKeyGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('menu:manage')
   remove(@Param('id') id: string) {
     return this.menusService.remove(id);
   }

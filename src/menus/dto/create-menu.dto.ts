@@ -6,10 +6,18 @@ export class CreateMenuDto {
   name: string;
 
   @IsString()
-  @IsNotEmpty({ message: '路径不能为空' })
-  path: string;
+  @IsOptional()
+  path?: string;
 
   @IsInt({ message: '排序必须是整数' })
   @IsOptional()
   sort?: number;
+
+  @IsString()
+  @IsOptional()
+  parentId?: string;
+
+  @IsString()
+  @IsOptional()
+  permissionCode?: string;
 }

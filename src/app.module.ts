@@ -8,6 +8,7 @@ import { SourcesModule } from './sources/sources.module';
 import { YieldsModule } from './yields/yields.module';
 import { EventsModule } from './events/events.module';
 import { MenusModule } from './menus/menus.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MenusModule } from './menus/menus.module';
     YieldsModule,
     EventsModule,
     MenusModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -9,14 +9,17 @@ import {
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
-import { ApiKeyGuard } from '../common/guards/api-key.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { PermissionsGuard } from '../auth/permissions.guard';
+import { RequirePermission } from '../auth/require-permission.decorator';
 
 @Controller('items')
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post()
-  @UseGuards(ApiKeyGuard) // 需要 API Key 鉴权
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('item:create')
   create(@Body() createItemDto: CreateItemDto) {
     return this.itemsService.create(createItemDto);
   }
@@ -32,7 +35,8 @@ export class ItemsController {
   }
 
   @Delete(':id')
-  @UseGuards(ApiKeyGuard) // 需要 API Key 鉴权
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('item:delete')
   remove(@Param('id') id: string) {
     return this.itemsService.remove(id);
   }

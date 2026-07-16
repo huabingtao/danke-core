@@ -19,8 +19,10 @@ export class MenusService {
     return this.prisma.menu.create({
       data: {
         name: dto.name,
-        path: dto.path,
+        path: dto.path ?? null,
         sort: dto.sort ?? 0,
+        parentId: dto.parentId ?? null,
+        permissionCode: dto.permissionCode ?? null,
       },
     });
   }
@@ -61,6 +63,8 @@ export class MenusService {
         name: dto.name,
         path: dto.path,
         sort: dto.sort,
+        parentId: dto.parentId,
+        permissionCode: dto.permissionCode,
       },
     });
   }

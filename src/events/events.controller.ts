@@ -9,14 +9,17 @@ import {
 } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
-import { ApiKeyGuard } from '../common/guards/api-key.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { PermissionsGuard } from '../auth/permissions.guard';
+import { RequirePermission } from '../auth/require-permission.decorator';
 
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
   @Post()
-  @UseGuards(ApiKeyGuard) // 鉴权保护
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('event:create')
   create(@Body() createEventDto: CreateEventDto) {
     return this.eventsService.create(createEventDto);
   }
@@ -32,7 +35,8 @@ export class EventsController {
   }
 
   @Delete(':id')
-  @UseGuards(ApiKeyGuard) // 鉴权保护
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('event:delete')
   remove(@Param('id') id: string) {
     return this.eventsService.remove(id);
   }

@@ -12,4 +12,12 @@ export class UpdateMenuDto {
   @IsInt({ message: '排序必须是整数' })
   @IsOptional()
   sort?: number;
+
+  @IsString()
+  @IsOptional()
+  parentId?: string;
+
+  @IsString()
+  @IsOptional()
+  permissionCode?: string;
 }

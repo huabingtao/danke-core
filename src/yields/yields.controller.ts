@@ -10,14 +10,17 @@ import {
 import { YieldsService } from './yields.service';
 import { CreateYieldDto } from './dto/create-yield.dto';
 import { QueryYieldDto } from './dto/query-yield.dto';
-import { ApiKeyGuard } from '../common/guards/api-key.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { PermissionsGuard } from '../auth/permissions.guard';
+import { RequirePermission } from '../auth/require-permission.decorator';
 
 @Controller('yields')
 export class YieldsController {
   constructor(private readonly yieldsService: YieldsService) {}
 
   @Post()
-  @UseGuards(ApiKeyGuard) // 鉴权保护
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('yield:edit')
   createOrUpdate(@Body() createYieldDto: CreateYieldDto) {
     return this.yieldsService.createOrUpdate(createYieldDto);
   }

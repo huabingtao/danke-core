@@ -10,6 +10,14 @@ export class CreateSourceDto {
   type: string;
 
   @IsString()
+  @IsNotEmpty({ message: '所属主分类（category）不能为空' })
+  category: string;
+
+  @IsString()
+  @IsOptional()
+  subcategory?: string;
+
+  @IsString()
   @IsOptional()
   description?: string;
 }
