@@ -34,7 +34,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       userId: user.id,
       username: user.username,
       role: user.role.code,
-      permissions: user.role.permissions.map(p => p.code),
+      permissions: user.role.permissions.map((p) => p.code),
     };
   }
 }

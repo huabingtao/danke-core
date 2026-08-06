@@ -27,7 +27,8 @@ export class AuthService {
       throw new UnauthorizedException('用户名或密码错误');
     }
 
-    const { password, ...result } = user;
+    const result = { ...user };
+    delete (result as any).password;
     return result;
   }
 
@@ -54,7 +55,7 @@ export class AuthService {
       throw new UnauthorizedException('用户不存在');
     }
 
-    const permissions = user.role.permissions.map(p => p.code);
+    const permissions = user.role.permissions.map((p) => p.code);
     const isSuperUser = user.role.code === 'ADMIN' || permissions.includes('*');
 
     // 1. 获取所有菜单项，按 sort 排序
@@ -63,7 +64,7 @@ export class AuthService {
     });
 
     // 2. 根据用户权限进行过滤
-    const filteredMenus = allMenus.filter(menu => {
+    const filteredMenus = allMenus.filter((menu) => {
       if (!menu.permissionCode) {
         return true;
       }
@@ -75,7 +76,7 @@ export class AuthService {
     const menuMap = new Map<string, any>();
 
     // 先将所有菜单转为带 children 的对象存入 map
-    filteredMenus.forEach(menu => {
+    filteredMenus.forEach((menu) => {
       menuMap.set(menu.id, {
         id: menu.id,
         name: menu.name,
@@ -88,7 +89,7 @@ export class AuthService {
     });
 
     // 组装父子树结构
-    menuMap.forEach(menuNode => {
+    menuMap.forEach((menuNode) => {
       if (menuNode.parentId) {
         const parentNode = menuMap.get(menuNode.parentId);
         if (parentNode) {
@@ -102,7 +103,7 @@ export class AuthService {
     // 4. 对所有层级的 children 按 sort 重新排序
     const sortTreeNodes = (nodes: any[]) => {
       nodes.sort((a, b) => a.sort - b.sort);
-      nodes.forEach(node => {
+      nodes.forEach((node) => {
         if (node.children && node.children.length > 0) {
           sortTreeNodes(node.children);
         }

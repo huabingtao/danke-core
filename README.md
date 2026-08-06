@@ -15,27 +15,28 @@
 ## 🚀 快速启动指南
 
 ### 1. 准备工作
-确保本地已安装 Node.js，且本地 **MySQL 服务已正常启动**。
-*   MySQL 默认地址：`localhost:3306`
-*   数据库名称：`danke`
+确保本地已安装 Node.js (>= 18.0.0)。项目采用纯嵌入式 **SQLite 数据库**，无需安装/启动任何外部 MySQL 服务！
 
 ### 2. 配置环境变量
-项目根目录下的 [`.env`](.env) 文件已预置以下配置。您可以根据实际情况进行修改：
+项目根目录下的 [`.env`](.env) 文件已预置以下配置：
 ```env
-DATABASE_URL="mysql://root:hbt223123@localhost:3306/danke?charset=utf8mb4"
+DATABASE_URL="file:./data/danke.db"
 PORT=3000
 ADMIN_API_KEY="danke_super_secret_key_123"
 ```
-> **⚠️ 注意**：`?charset=utf8mb4` 必须保留，以防止插入中文物品名时报 `Incorrect string value` 字符编码错误。
 
-### 3. 生成 Prisma 数据库客户端
+### 3. 初始化 SQLite 数据库与客户端
 首次拉取或每次修改 `prisma/schema.prisma` 后运行：
 ```bash
+# 1. 生成 Prisma TypeScript 客户端
 npx prisma generate
+
+# 2. 自动建表同步至本地 SQLite 数据库文件 (./data/danke.db)
+npx prisma db push
 ```
 
 ### 4. 填充初始测试数据 (Seeding)
-运行以下命令，向您的本地 MySQL 数据库中自动填充《弹壳特攻队》的初始数据（包括：S钥匙、宝石、每日挑战、周常箱子和周年庆活动产出等）：
+运行以下命令，向您的 SQLite 数据库中自动填充《弹壳特攻队》的全量 RBAC 角色权限、测试账号、菜单结构及初始资产数据：
 ```bash
 npx prisma db seed
 ```

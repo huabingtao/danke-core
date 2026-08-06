@@ -1,18 +1,28 @@
 import { PrismaClient } from '../generated/client';
-import { PrismaMariaDb } from '@prisma/adapter-mariadb';
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import Database from 'better-sqlite3';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import * as fs from 'fs';
 import * as bcrypt from 'bcrypt';
 
 // 加载环境变量
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
-const connectionString = process.env.DATABASE_URL;
-if (!connectionString) {
-  throw new Error('DATABASE_URL is not defined in the environment variables');
+const rawUrl = process.env.DATABASE_URL || 'file:./data/danke.db';
+const relativePath = rawUrl.replace(/^file:/, '');
+const absolutePath = path.resolve(process.cwd(), relativePath);
+
+// 确保目录存在
+const dirPath = path.dirname(absolutePath);
+if (!fs.existsSync(dirPath)) {
+  fs.mkdirSync(dirPath, { recursive: true });
 }
 
-const adapter = new PrismaMariaDb(connectionString, { useTextProtocol: true });
+const sqliteDb = new Database(absolutePath);
+sqliteDb.pragma('journal_mode = WAL');
+
+const adapter = new PrismaBetterSqlite3({ url: absolutePath });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
