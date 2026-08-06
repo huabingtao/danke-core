@@ -32,6 +32,7 @@ export class PrismaService
     // 开启 SQLite WAL 模式
     sqliteDb.pragma('journal_mode = WAL');
     sqliteDb.pragma('synchronous = NORMAL');
+    sqliteDb.close();
 
     const adapter = new PrismaBetterSqlite3({ url: absolutePath });
     super({ adapter });
