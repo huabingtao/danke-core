@@ -2,21 +2,21 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
+  Put,
   Body,
   Param,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { SourcesService } from './sources.service';
 import { CreateSourceDto } from './dto/create-source.dto';
-import { ApiKeyGuard } from '../common/guards/api-key.guard';
+import { UpdateSourceDto } from './dto/update-source.dto';
 
 @Controller('sources')
 export class SourcesController {
   constructor(private readonly sourcesService: SourcesService) {}
 
   @Post()
-  @UseGuards(ApiKeyGuard) // 需要 API Key 鉴权
   create(@Body() createSourceDto: CreateSourceDto) {
     return this.sourcesService.create(createSourceDto);
   }
@@ -31,9 +31,19 @@ export class SourcesController {
     return this.sourcesService.findOne(id);
   }
 
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateSourceDto: UpdateSourceDto) {
+    return this.sourcesService.update(id, updateSourceDto);
+  }
+
+  @Put(':id')
+  updatePut(@Param('id') id: string, @Body() updateSourceDto: UpdateSourceDto) {
+    return this.sourcesService.update(id, updateSourceDto);
+  }
+
   @Delete(':id')
-  @UseGuards(ApiKeyGuard) // 需要 API Key 鉴权
   remove(@Param('id') id: string) {
     return this.sourcesService.remove(id);
   }
 }
+

@@ -10,6 +10,7 @@ generator client {
 model Item {
   id          String         @id @default(uuid())
   name        String         @unique
+  icon        String?        // 图标相对路径或URL，如 /icons/items/s杰出装备.png
   type        String         // e.g., KEY, CURRENCY, EQUIPMENT, TECH_PART
   description String?
   stats       String?        // For future damage calculator effects (stringified JSON, e.g. '{"atk": 100}', compatible with MySQL 5.6)
@@ -49,7 +50,7 @@ model MonthlyYield {
   source    Source     @relation(fields: [sourceId], references: [id], onDelete: Cascade)
   eventId   String?
   event     GameEvent? @relation(fields: [eventId], references: [id], onDelete: SetNull)
-  amount    Int
+  amount    Float
   month     Int        // 1-12
   year      Int        // e.g., 2026
   notes     String?
@@ -101,3 +102,85 @@ model Menu {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+model ReminderRule {
+  id              String    @id @default(uuid())
+  name            String    // 规则名称 (如: "区域行动", "公会远征")
+  category        String    @default("START_END") // "START_END" (开始结束提醒) | "REDEEM_DEADLINE" (兑换截止)
+  ruleType        String    @default("CYCLE") // "CYCLE" (周期循环) | "ROUTINE" (常规定时)
+
+  // 常规模式 (ROUTINE)
+  routineType     String?   // "DAILY" | "WEEKLY"
+  weeklyDay       Int?      // 0-6 (0=周日, 1=周一...)
+
+  // 循环模式 (CYCLE)
+  startDate       DateTime? // 开始基准日期, e.g. 2026-08-23
+  durationDays    Int?      // 持续/玩法天数, e.g. 7
+  cycleDays       Int?      // 循环周期天数, e.g. 7, 28
+  hasRedeemDay    Boolean   @default(false) // 是否有专属兑换日
+
+  // 每日提醒自定义模板与备注 (支持 {name}, {days} 占位符)
+  digestTemplate  String?   // 倒计时提醒文案模板 (默认: "离本轮【{name}】结束还剩 {days} 天")
+  redeemTemplate  String?   // 专属兑换日文案模板 (默认: "今天是【{name}】专属兑换日，别忘了兑换奖励！")
+  routineTemplate String?   // 常规定时文案模板 (如: "今天是【{name}】打卡日")
+  digestNote      String?   // 每日提醒附加备注 (如: "记得提前备好体力打满")
+
+  enabled         Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Agent {
+  id          String   @id @default(uuid())
+  code        String   @unique // e.g. "VITOR", "RINNE", "YANG", "KING"
+  name        String   // e.g. "维托尔"
+  subtitle    String   // e.g. "神火狂啸 · 爆发核心"
+  tier        String   // e.g. "SS级特工"
+  rating      String   // e.g. "99% 胜率推荐"
+  role        String   // e.g. "极速清屏 / 爆发输出"
+  mainSkill   String   // e.g. "魔导爆破：发射穿透性高能魔弹..."
+  perks       String   // JSON string array: '["魔能轰炸", "肾上腺素"]'
+  colorScheme String   // JSON string: { bg, border, badgeBg, badgeText, glow, textGradient, energyColor }
+  image       String   // e.g. "/assets/agent-vitor.png"
+  sort        Int      @default(0)
+  enabled     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model StrategyArticle {
+  id                  String    @id @default(uuid())
+  slug                String    @unique // e.g. "pub-20260912-special-agent-faq"
+  title               String    // 标题
+  category            String    // event | boss | agent | resources | faq | reminder
+  categoryLabel       String    // 活动精算 | 回响 Boss | 特工评测 | 装备养成 | 避坑指南 | 每日日历
+  badge               String?   // HOT | 必备 | 爆料
+  summary             String    // 摘要
+  readTime            String    @default("5 分钟")
+  views               String    @default("1.0w")
+  date                String    // e.g. "09-11"
+  highlights          String    // JSON string array: '["免费资源拉满", "彩虹骰保底"]'
+  cover               String?   // 封面图路径
+  url                 String?   // 原始外链/微信文章链接
+  
+  // 双轨渲染与存储控制
+  sourceType          String    @default("REMOTE_HTML_ONLY") // "LOCAL_MARKDOWN" | "REMOTE_HTML_ONLY"
+  sourcePath          String?   // 关联的本地 my-articles-md 路径（若有）
+  sourceLastModified  DateTime? // 本地手稿文件最后修改时间，用于热更新比对
+  channel             String    @default("WECHAT")           // WECHAT | LOCAL_MARKDOWN
+  contentType         String    @default("HTML")             // HTML | MARKDOWN | MICRO_ARTICLE
+  
+  // 内容与资产持久化
+  contentHtml         String?   // 清洗重写后的富文本 HTML（用于 1:1 还原）
+  contentMarkdown     String?   // 语义化 Markdown 正文
+  mediaMapping        String?   // 媒体映射 JSON: {"remote_url": "local_path"}
+  originalMsgId       Int?      // 微信后台发表记录 msgid
+  originalPublishTime DateTime? // 原始群发时间戳
+  
+  sort                Int       @default(0)
+  enabled             Boolean   @default(true)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+

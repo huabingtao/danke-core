@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateSourceDto } from './dto/create-source.dto';
+import { UpdateSourceDto } from './dto/update-source.dto';
 
 @Injectable()
 export class SourcesService {
@@ -42,6 +43,25 @@ export class SourcesService {
     return source;
   }
 
+  async update(id: string, dto: UpdateSourceDto) {
+    const existing = await this.findOne(id);
+
+    if (dto.name && dto.name !== existing.name) {
+      const duplicate = await this.prisma.source.findUnique({
+        where: { name: dto.name },
+      });
+
+      if (duplicate) {
+        throw new ConflictException(`名称为 "${dto.name}" 的产出途径已存在`);
+      }
+    }
+
+    return this.prisma.source.update({
+      where: { id },
+      data: dto,
+    });
+  }
+
   async remove(id: string) {
     await this.findOne(id); // Ensure exists
     return this.prisma.source.delete({
@@ -49,3 +69,4 @@ export class SourcesService {
     });
   }
 }
+

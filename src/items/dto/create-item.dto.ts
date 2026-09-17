@@ -6,8 +6,12 @@ export class CreateItemDto {
   name: string;
 
   @IsString()
-  @IsNotEmpty({ message: '物品类型不能为空' })
-  type: string;
+  @IsOptional()
+  icon?: string;
+
+  @IsString()
+  @IsOptional()
+  type?: string;
 
   @IsString()
   @IsOptional()
@@ -17,3 +21,4 @@ export class CreateItemDto {
   @IsOptional()
   stats?: Record<string, any>;
 }
+

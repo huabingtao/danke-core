@@ -39,6 +39,36 @@ export class AuthService {
     };
   }
 
+  async changePassword(userId: string, oldPass: string, newPass: string) {
+    if (!newPass || newPass.length < 6) {
+      throw new UnauthorizedException('新密码长度不能少于 6 位');
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('用户不存在');
+    }
+
+    const isMatch = await bcrypt.compare(oldPass, user.password);
+    if (!isMatch) {
+      throw new UnauthorizedException('原密码错误，请重新输入');
+    }
+
+    const hashedPassword = await bcrypt.hash(newPass, 10);
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword },
+    });
+
+    return {
+      success: true,
+      message: '密码修改成功',
+    };
+  }
+
   async getProfile(userId: string) {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },

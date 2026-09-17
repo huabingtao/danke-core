@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateItemDto } from './dto/create-item.dto';
+import { UpdateItemDto } from './dto/update-item.dto';
 
 @Injectable()
 export class ItemsService {
@@ -24,7 +25,8 @@ export class ItemsService {
     const item = await this.prisma.item.create({
       data: {
         name: dto.name,
-        type: dto.type,
+        icon: dto.icon || null,
+        type: dto.type || 'RESOURCE',
         description: dto.description,
         stats: statsString,
       },
@@ -50,6 +52,35 @@ export class ItemsService {
     }
 
     return this.parseItemStats(item);
+  }
+
+  async update(id: string, dto: UpdateItemDto) {
+    const item = await this.findOne(id);
+
+    if (dto.name && dto.name !== item.name) {
+      const conflict = await this.prisma.item.findUnique({
+        where: { name: dto.name },
+      });
+      if (conflict && conflict.id !== id) {
+        throw new ConflictException(`名称为 "${dto.name}" 的物品已存在`);
+      }
+    }
+
+    const dataToUpdate: any = {};
+    if (dto.name !== undefined) dataToUpdate.name = dto.name;
+    if (dto.icon !== undefined) dataToUpdate.icon = dto.icon;
+    if (dto.type !== undefined) dataToUpdate.type = dto.type;
+    if (dto.description !== undefined) dataToUpdate.description = dto.description;
+    if (dto.stats !== undefined) {
+      dataToUpdate.stats = dto.stats ? JSON.stringify(dto.stats) : null;
+    }
+
+    const updated = await this.prisma.item.update({
+      where: { id },
+      data: dataToUpdate,
+    });
+
+    return this.parseItemStats(updated);
   }
 
   async remove(id: string) {

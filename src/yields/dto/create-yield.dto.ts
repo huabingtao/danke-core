@@ -3,6 +3,7 @@ import {
   IsOptional,
   IsString,
   IsInt,
+  IsNumber,
   Min,
   Max,
 } from 'class-validator';
@@ -20,7 +21,7 @@ export class CreateYieldDto {
   @IsOptional()
   eventId?: string;
 
-  @IsInt({ message: '产出数量必须是整数' })
+  @IsNumber({}, { message: '产出数量必须是有效数字' })
   @Min(0, { message: '产出数量不能小于 0' })
   amount: number;
 

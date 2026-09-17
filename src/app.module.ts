@@ -6,9 +6,11 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ItemsModule } from './items/items.module';
 import { SourcesModule } from './sources/sources.module';
 import { YieldsModule } from './yields/yields.module';
-import { EventsModule } from './events/events.module';
 import { MenusModule } from './menus/menus.module';
 import { AuthModule } from './auth/auth.module';
+import { ReminderModule } from './modules/reminder/reminder.module';
+import { AgentsModule } from './agents/agents.module';
+import { StrategiesModule } from './strategies/strategies.module';
 
 @Module({
   imports: [
@@ -17,9 +19,11 @@ import { AuthModule } from './auth/auth.module';
     ItemsModule,
     SourcesModule,
     YieldsModule,
-    EventsModule,
     MenusModule,
     AuthModule,
+    ReminderModule,
+    AgentsModule,
+    StrategiesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

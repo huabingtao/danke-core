@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Body,
   Param,
   Delete,
@@ -9,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
+import { UpdateItemDto } from './dto/update-item.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { PermissionsGuard } from '../auth/permissions.guard';
 import { RequirePermission } from '../auth/require-permission.decorator';
@@ -34,6 +36,13 @@ export class ItemsController {
     return this.itemsService.findOne(id);
   }
 
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('item:create')
+  update(@Param('id') id: string, @Body() updateItemDto: UpdateItemDto) {
+    return this.itemsService.update(id, updateItemDto);
+  }
+
   @Delete(':id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @RequirePermission('item:delete')
@@ -41,3 +50,4 @@ export class ItemsController {
     return this.itemsService.remove(id);
   }
 }
+

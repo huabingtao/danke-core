@@ -28,4 +28,14 @@ export class AuthController {
     // req.user is injected by JwtStrategy
     return this.authService.getProfile(req.user.userId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('change-password')
+  async changePassword(@Request() req: any, @Body() body: { oldPassword?: string; newPassword?: string }) {
+    return this.authService.changePassword(
+      req.user.userId,
+      body.oldPassword || '',
+      body.newPassword || '',
+    );
+  }
 }

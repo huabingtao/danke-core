@@ -29,6 +29,7 @@ async function main() {
   console.log('开始填充全新的 RBAC 动态初始数据... 🌱');
 
   // 1. 清理已有数据
+  await prisma.reminderRule.deleteMany();
   await prisma.monthlyYield.deleteMany();
   await prisma.gameEvent.deleteMany();
   await prisma.source.deleteMany();
@@ -49,6 +50,8 @@ async function main() {
     { name: '查看资产产出看板', code: 'yields:view', type: 'PAGE' },
     { name: '录入修改资产产出', code: 'yield:edit', type: 'BUTTON' },
     { name: '管理导航菜单', code: 'menu:manage', type: 'PAGE' },
+    { name: '查看微信群提醒配置', code: 'reminders:view', type: 'PAGE' },
+    { name: '管理微信群提醒规则', code: 'reminders:manage', type: 'BUTTON' },
   ];
 
   const permissionMap: { [code: string]: any } = {};
@@ -88,7 +91,7 @@ async function main() {
   console.log('角色创建成功! ✅');
 
   // 4. 创建用户 (Users) 并加密密码
-  const hashedPassword = await bcrypt.hash('123', 10);
+  const hashedPassword = await bcrypt.hash('hbt223123', 10);
 
   const userAdmin = await prisma.user.create({
     data: {
@@ -105,7 +108,7 @@ async function main() {
       roleId: assistantRole.id,
     },
   });
-  console.log('测试用户创建成功! ✅ (密码为: 123)');
+  console.log('测试用户创建成功! ✅ (密码为: hbt223123)');
 
   // 5. 创建树形结构菜单项 (Menus)
   // 顶级菜单项
@@ -149,6 +152,15 @@ async function main() {
       path: '/menus',
       sort: 5,
       permissionCode: 'menu:manage',
+    },
+  });
+
+  const mReminders = await prisma.menu.create({
+    data: {
+      name: '微信群提醒规则',
+      path: '/reminders',
+      sort: 6,
+      permissionCode: 'reminders:view',
     },
   });
 
@@ -301,6 +313,51 @@ async function main() {
   }
 
   console.log('月度产出明细初始化数据创建成功! ✅');
+
+  // 9. 创建默认提醒规则 (ReminderRules)
+  const initialReminderRules = [
+    {
+      name: '公会远征周日提醒',
+      category: 'START_END',
+      ruleType: 'ROUTINE',
+      routineType: 'WEEKLY',
+      weeklyDay: 0, // 周日
+      dailyTime: '20:00',
+      enabled: true,
+      content: '公会远征结算提醒',
+    },
+    {
+      name: '周年庆彩虹矿山',
+      category: 'START_END',
+      ruleType: 'EVENT',
+      startDate: new Date('2026-08-25'),
+      durationDays: 5,
+      hasRedeemDay: true,
+      remindTime: '20:00',
+      remindDays: 'LAST_1_DAYS',
+      enabled: true,
+      content: '彩虹矿山限时活动提醒',
+    },
+    {
+      name: '区域行动',
+      category: 'START_END',
+      ruleType: 'CYCLE',
+      startDate: new Date('2026-08-23'),
+      durationDays: 7,
+      cycleDays: 7,
+      remindTime: '20:00',
+      remindDays: 'FIRST_DAY,LAST_2_DAYS,LAST_1_DAYS',
+      hasRedeemDay: false,
+      enabled: true,
+      content: null,
+    },
+  ];
+
+  for (const r of initialReminderRules) {
+    await prisma.reminderRule.create({ data: r });
+  }
+
+  console.log('提醒规则初始化数据创建成功! ✅');
   console.log('所有全新的 RBAC 动态初始数据填充完成! 🌳');
 }
 
