@@ -18,6 +18,6 @@
 - [x] Centralize backend cycle calculation and align list/detail/digest, including explicit redemption-only default copy.
 - [x] Extract admin preview helpers into lib/reminder-status.ts; accept total days in form; edit legacy 28+1 as 29; save 28/29; reject fewer than 2 days for redemption rules.
 - [x] Add frontend preview and form submission/reopen regression coverage; run relevant suites and both builds.
-- [ ] Review diffs, commit and push both branches to origin, verify remote commit IDs.
+- [x] Review diffs, commit and push both branches to origin, verify remote commit IDs.
 - [x] Correct only the escape rule through the local API to durationDays=28, cycleDays=29, hasRedeemDay=true. Verify actual MCP output and boundary dates.
-- [ ] Regenerate today's article from actual MCP result using the unchanged series cover; update existing WeChat draft and read it back.
+- [x] Regenerate today's article from actual MCP result using the unchanged series cover; update existing WeChat draft and read it back.
