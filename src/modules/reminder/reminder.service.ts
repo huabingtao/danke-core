@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { computeCycleState } from './reminder-cycle';
 
 export interface CreateReminderDto {
   name: string;
@@ -43,6 +44,7 @@ export interface DailyDigestItem {
   routineType?: string;
   status: 'ACTIVE' | 'REDEEM' | 'ROUTINE_TRIGGER' | 'INACTIVE';
   daysRemaining?: number;
+  playableDaysRemaining?: number;
   isFirstDay?: boolean;
   isRedeemDay?: boolean;
   isTriggerDay?: boolean;
@@ -76,39 +78,17 @@ export class ReminderService {
 
     if (rule.ruleType === 'CYCLE' && rule.startDate) {
       const startDate = new Date(rule.startDate);
-      const normalizedStart = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 0, 0, 0, 0);
-      const diffDays = Math.floor((normalizedTarget.getTime() - normalizedStart.getTime()) / (1000 * 60 * 60 * 24));
-
-      const durationDays = rule.durationDays || 7;
-      let cycleDays = rule.cycleDays || durationDays;
-      if (rule.hasRedeemDay && cycleDays <= durationDays) {
-        cycleDays = durationDays + 1;
-      }
-
-      if (diffDays < 0) {
-        daysRemaining = Math.abs(diffDays);
-        computedStatus = 'UPCOMING';
-      } else {
-        const dayInCycle = ((diffDays % cycleDays) + cycleDays) % cycleDays;
-        if (dayInCycle < durationDays) {
-          daysRemaining = durationDays - dayInCycle;
-          computedStatus = 'ACTIVE';
-        } else if (rule.hasRedeemDay && dayInCycle === durationDays) {
-          daysRemaining = 0;
-          computedStatus = 'REDEEM';
-        } else {
-          daysRemaining = cycleDays - dayInCycle;
-          computedStatus = 'COOLDOWN';
-        }
-      }
+      const state = computeCycleState(rule, normalizedTarget);
+      const { durationDays, cycleDays } = state;
 
       const startStr = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, '0')}-${String(startDate.getDate()).padStart(2, '0')}`;
-      const redeemStr = rule.hasRedeemDay ? ' (+1天兑换)' : '';
+      const redeemStr = rule.hasRedeemDay ? '，另有 1 天仅兑换' : '';
       return {
         ...rule,
-        daysRemaining,
-        computedStatus,
-        humanSchedule: `首期 ${startStr} | 持续 ${durationDays} 天${redeemStr} (每 ${cycleDays} 天循环)`,
+        daysRemaining: state.daysRemaining,
+        playableDaysRemaining: state.playableDaysRemaining,
+        computedStatus: state.computedStatus,
+        humanSchedule: `首期 ${startStr} | 游玩持续 ${durationDays} 天${redeemStr} (每 ${cycleDays} 天循环)`,
       };
     } else if (rule.ruleType === 'ROUTINE') {
       let desc = '';
@@ -283,23 +263,16 @@ export class ReminderService {
 
     for (const rule of rules) {
       if (rule.ruleType === 'CYCLE' && rule.startDate) {
-        const start = new Date(rule.startDate);
-        const normalizedStart = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 0, 0, 0, 0);
-        const diffDays = Math.floor((normalizedTarget.getTime() - normalizedStart.getTime()) / (1000 * 60 * 60 * 24));
+        const state = computeCycleState({ ...rule, startDate: rule.startDate }, normalizedTarget);
 
-        const durationDays = rule.durationDays || 7;
-        let cycleDays = rule.cycleDays || durationDays;
-        if (rule.hasRedeemDay && cycleDays <= durationDays) {
-          cycleDays = durationDays + 1;
-        }
-        const dayInCycle = ((diffDays % cycleDays) + cycleDays) % cycleDays;
-
-        if (dayInCycle < durationDays) {
-          const daysLeft = durationDays - dayInCycle;
-          const isFirstDay = dayInCycle === 0;
+        if (state.computedStatus === 'ACTIVE') {
+          const daysLeft = state.daysRemaining;
+          const isFirstDay = state.isFirstDay;
 
           // 使用自定义模板或默认模板
-          const template = rule.digestTemplate?.trim() || '离本轮结束还剩 {days} 天';
+          const template = rule.digestTemplate?.trim() || (rule.hasRedeemDay
+            ? '离本轮结束还剩 {days} 天（含最后 1 天仅兑换）'
+            : '离本轮结束还剩 {days} 天');
           const statusText = template
             .replace(/\{name\}/g, rule.name)
             .replace(/\{days\}/g, String(daysLeft));
@@ -314,17 +287,18 @@ export class ReminderService {
             ruleType: 'CYCLE',
             status: 'ACTIVE',
             daysRemaining: daysLeft,
+            playableDaysRemaining: state.playableDaysRemaining,
             isFirstDay,
             isRedeemDay: false,
             statusText,
             digestNote: note,
             fullText,
           });
-        } else if (rule.hasRedeemDay && dayInCycle === durationDays) {
-          const template = rule.redeemTemplate?.trim() || '今天是专属兑换日，别忘了兑换奖励！';
+        } else if (state.computedStatus === 'REDEEM') {
+          const template = rule.redeemTemplate?.trim() || '今天是专属兑换日，仅可兑换奖励，不可游玩。';
           const statusText = template
             .replace(/\{name\}/g, rule.name)
-            .replace(/\{days\}/g, '0');
+            .replace(/\{days\}/g, String(state.daysRemaining));
 
           const note = rule.digestNote?.trim() || null;
           const fullText = note ? `${statusText}（${note}）` : statusText;
@@ -335,7 +309,8 @@ export class ReminderService {
             category: rule.category,
             ruleType: 'CYCLE',
             status: 'REDEEM',
-            daysRemaining: 0,
+            daysRemaining: state.daysRemaining,
+            playableDaysRemaining: 0,
             isFirstDay: false,
             isRedeemDay: true,
             statusText,
