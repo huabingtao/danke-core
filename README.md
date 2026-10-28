@@ -21,7 +21,7 @@
 项目根目录下的 [`.env`](.env) 文件已预置以下配置：
 ```env
 DATABASE_URL="file:./data/danke.db"
-PORT=3000
+PORT=3001
 ADMIN_API_KEY="danke_super_secret_key_123"
 ```
 

@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "status": "COLLECTING",
+  "year": 2026,
+  "month": 10,
+  "provenance": {
+    "kind": "USER_DICTATION",
+    "batch": 1,
+    "description": "用户分批口述规则；保留中位参考口径，未表述清楚的字段不推断。"
+  },
+  "displayPolicy": {
+    "valueLabel": "难度中位参考值（估算）",
+    "globalNote": "奖励随游戏难度、档位和实际完成情况变化。本表部分数量采用用户提供的中位参考值，不代表所有玩家均可获得，也不等同于经样本计算的统计中位数或保证收益。具体口径见各途径说明。",
+    "helpEntry": {
+      "label": "数据口径说明",
+      "placement": "产出表格旁",
+      "interaction": "点击展开全表说明；各途径另显示计算和条件备注"
+    },
+    "excludeFromGuaranteedMonthlyTotal": true
+  },
+  "writeBackPolicy": {
+    "status": "NOT_APPLIED",
+    "strategy": "先累计口述JSON；当前批次不更改数据库数量，补全轮换等缺失规则后按JSON统一回填。",
+    "preserveExistingSourceIds": true,
+    "preventDoubleCounting": "实际回填时，在同一事务中写入具体钥匙并处理同年月同途径的旧综合钥匙记录；不能保留两份一起计数。",
+    "missingIsNotZero": true,
+    "doNotSplitEvenly": true
+  },
+  "rules": [
+    {
+      "id": "monthly-mine-expedition-phase-one",
+      "spokenName": "月矿远征一阶段",
+      "targetSource": {
+        "id": "488cb3e9-11bd-4cb8-9ae7-166c658857b0",
+        "existingName": "工会远征第一阶段难度12以上"
+      },
+      "basis": "USER_PROVIDED_REFERENCE_ESTIMATE",
+      "monthlyAmount": 60,
+      "key": {
+        "id": "0ef97418-0303-40ee-9f22-ac410874a450",
+        "name": "配件宝箱钥匙",
+        "aliases": [
+          "配件钥匙"
+        ]
+      },
+      "calculation": {
+        "kind": "MONTHLY_TOTAL_GIVEN",
+        "formula": "按用户指定，每月60把",
+        "occurrencesPerMonth": null,
+        "rewardPerOccurrence": null
+      },
+      "eligibility": null,
+      "note": "采用用户提供的难度中位参考口径，每月按60把配件宝箱钥匙估算；未提供每期次数或具体档位，不自行补算。",
+      "previousImageRecord": {
+        "key": "其他钥匙（综合）",
+        "amount": 152
+      },
+      "parsingStatus": "QUANTITY_AND_KEY_IDENTIFIED",
+      "pending": [
+        "具体适用难度、档位和领取条件尚未提供；不影响记录用户指定的月度参考值。"
+      ]
+    },
+    {
+      "id": "monthly-mine-expedition-battle",
+      "spokenName": "卫矿远征对战阶段",
+      "normalizedName": "月矿远征对战阶段",
+      "normalizationNote": "按本段月矿远征上下文关联已有第二阶段；保留口述原词，不改后台途径名称。",
+      "targetSource": {
+        "id": "bf9639e3-4e37-43e4-a9e2-11ca0a7f3169",
+        "existingName": "工会远征第二阶段"
+      },
+      "basis": "USER_PROVIDED_REFERENCE_ESTIMATE",
+      "monthlyAmount": 70,
+      "key": {
+        "id": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+        "name": "s级军备钥匙",
+        "displayName": "S级军备钥匙",
+        "aliases": [
+          "S级钥匙"
+        ]
+      },
+      "calculation": {
+        "kind": "WEIGHTED_OCCURRENCE_SUM",
+        "occurrencesPerMonth": 3,
+        "occurrences": [
+          {
+            "count": 2,
+            "rewardPerOccurrence": 20,
+            "subtotal": 40,
+            "condition": null
+          },
+          {
+            "count": 1,
+            "rewardPerOccurrence": 30,
+            "subtotal": 30,
+            "conditionAsStated": "没打满",
+            "conditionConfirmed": false
+          }
+        ],
+        "formula": "2 × 20 + 1 × 30 = 70",
+        "supersededInterpretation": "不采用前面提到的每次20把、三次共60把；以用户随后明确的70把为准。"
+      },
+      "note": "每月按三次对战估算：两次各20把，一次30把，共70把S级军备钥匙。30把对应的条件暂保留用户原话“没打满”，不擅自改成打满或其他档位。",
+      "previousImageRecord": {
+        "key": "其他钥匙（综合）",
+        "amount": 240
+      },
+      "parsingStatus": "QUANTITY_AND_KEY_IDENTIFIED",
+      "pending": [
+        "一次30把所对应的“没打满”条件需要后续补充具体含义，当前仅记录月度参考模型。"
+      ]
+    },
+    {
+      "id": "weekly-task-gifts",
+      "spokenName": "任务好礼",
+      "targetSource": {
+        "id": "999b37e1-7b79-45b7-adbb-4c89452fdb4a",
+        "existingName": "任务好礼"
+      },
+      "basis": "USER_PROVIDED_REFERENCE_ESTIMATE",
+      "monthlyCombinedAmount": 236,
+      "calculation": {
+        "kind": "FIXED_OCCURRENCES_PER_MONTH",
+        "frequency": "WEEKLY",
+        "occurrencesPerMonth": 4,
+        "rewardPerOccurrence": 59,
+        "formula": "4 × 59 = 236",
+        "occurrenceCountBasis": "按用户指定每月四次，不按自然月天数推成五次。"
+      },
+      "identifiedRotatingKeyTypes": [
+        {
+          "id": "b6d98def-2a6b-490c-8684-2d3b55346c31",
+          "name": "高级宠物箱钥匙"
+        },
+        {
+          "id": "0ef97418-0303-40ee-9f22-ac410874a450",
+          "name": "配件宝箱钥匙",
+          "aliases": [
+            "配件钥匙"
+          ]
+        },
+        {
+          "id": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+          "name": "s级军备钥匙",
+          "displayName": "S级军备钥匙"
+        }
+      ],
+      "possibleAdditionalKeyTypes": [
+        {
+          "id": "786d73fb-7237-410b-af03-0b22650db980",
+          "name": "收藏品宝箱钥匙",
+          "confirmed": false,
+          "sourceWording": "可能还有收藏品钥匙，我不太确定"
+        }
+      ],
+      "rotationOrder": null,
+      "monthlyOccurrencesByKey": null,
+      "monthlyAmountsByKey": null,
+      "previousImageRecord": {
+        "key": "其他钥匙（综合）",
+        "amount": 220
+      },
+      "note": "每次59把是当次轮换钥匙的数量，不是三种钥匙各59把。月度四次合计236把；未确认四次分别是什么钥匙，不按三等分、四等分或默认轮换顺序分配。",
+      "parsingStatus": "WAITING_FOR_ROTATION",
+      "pending": [
+        "确认是否包含收藏品宝箱钥匙。",
+        "确认当月四次分别对应哪些钥匙；所列三种钥匙的顺序不视为已确认的轮换顺序。"
+      ]
+    }
+  ],
+  "unresolvedQuestions": [
+    {
+      "rule": "monthly-mine-expedition-battle",
+      "field": "calculation.occurrences[1].conditionAsStated",
+      "question": "一次30把对应的“没打满”具体指什么奖励条件？",
+      "blocksParsingOfMonthlyAmount": false
+    },
+    {
+      "rule": "weekly-task-gifts",
+      "field": "possibleAdditionalKeyTypes",
+      "question": "是否包含收藏品宝箱钥匙？",
+      "blocksPerKeyAllocation": true
+    },
+    {
+      "rule": "weekly-task-gifts",
+      "field": "monthlyOccurrencesByKey",
+      "question": "当月四次的具体钥匙种类及出现次数是什么？",
+      "blocksPerKeyAllocation": true
+    }
+  ]
+}
+

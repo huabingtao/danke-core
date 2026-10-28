@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import * as fs from 'fs';
 import * as path from 'path';
+import matter from 'gray-matter';
 import { marked } from 'marked';
 
 export interface StrategyArticleDto {
@@ -31,6 +32,22 @@ export interface StrategyArticleDto {
   enabled?: boolean;
 }
 
+function safeDecodeUri(str: string | null | undefined): string {
+  if (!str) return '';
+  try {
+    return decodeURIComponent(str);
+  } catch {
+    let cleaned = str;
+    while (cleaned.includes('%')) {
+      cleaned = cleaned.replace(/%[0-9a-fA-F]{0,2}$/, '');
+      try {
+        return decodeURIComponent(cleaned);
+      } catch {}
+    }
+    return cleaned;
+  }
+}
+
 @Injectable()
 export class StrategiesService {
   private readonly logger = new Logger(StrategiesService.name);
@@ -41,6 +58,9 @@ export class StrategiesService {
     const where: any = { enabled: true };
     if (category && category !== 'all') {
       where.category = category;
+    } else {
+      // 默认过滤掉每日提醒
+      where.category = { not: 'reminder' };
     }
 
     const records = await this.prisma.strategyArticle.findMany({
@@ -48,30 +68,92 @@ export class StrategiesService {
       orderBy: [{ sort: 'asc' }, { date: 'desc' }, { createdAt: 'desc' }],
     });
 
-    return records.map((item) => ({
-      id: item.slug,
-      slug: item.slug,
-      title: item.title,
-      category: item.category,
-      categoryLabel: item.categoryLabel,
-      badge: item.badge,
-      summary: item.summary,
-      readTime: item.readTime,
-      views: item.views,
-      date: item.date,
-      highlights: this.safeParse(item.highlights, []),
-      cover: item.cover,
-      url: item.url,
-      sourceType: item.sourceType,
-      sourcePath: item.sourcePath,
-      sort: item.sort,
-    }));
+    return records
+      .filter((item) => {
+        // 如果不是明确请求 reminder，则彻底排除每日提醒
+        if (category !== 'reminder') {
+          if (
+            item.category === 'reminder' ||
+            item.title.includes('日历') ||
+            item.title.includes('每日事项') ||
+            item.title.includes('每日提醒') ||
+            item.categoryLabel === '每日日历' ||
+            item.categoryLabel === '提醒' ||
+            item.sourcePath?.includes('提醒/')
+          ) {
+            return false;
+          }
+        }
+        return true;
+      })
+      .map((item) => {
+        const highlights = this.safeParse(item.highlights, []).map((h: string) =>
+          String(h).replace(/\([a-zA-Z-]+\)/g, '').trim(),
+        );
+        const rawTag = highlights[0] || item.categoryLabel;
+        const tag = rawTag.replace(/\([a-zA-Z-]+\)/g, '').trim();
+        const cleanLabel = (item.categoryLabel || tag).replace(/\([a-zA-Z-]+\)/g, '').trim();
+
+        return {
+          id: item.slug,
+          slug: item.slug,
+          title: item.title,
+          tag,
+          category: item.category,
+          categoryLabel: cleanLabel,
+          badge: item.badge,
+          summary: item.summary,
+          readTime: item.readTime,
+          views: item.views,
+          date: item.date,
+          highlights,
+          cover: item.cover,
+          url: item.url,
+          sourceType: item.sourceType,
+          sourcePath: item.sourcePath,
+          sort: item.sort,
+        };
+      });
   }
 
   async findBySlug(slug: string) {
-    const item = await this.prisma.strategyArticle.findUnique({
-      where: { slug },
+    const rawSlug = (slug || '').trim();
+    const decodedSlug = safeDecodeUri(rawSlug);
+
+    // 1. 精确匹配原始 slug
+    let item = await this.prisma.strategyArticle.findUnique({
+      where: { slug: rawSlug },
     });
+
+    // 2. 精确匹配安全解码后的 slug
+    if (!item && decodedSlug !== rawSlug) {
+      item = await this.prisma.strategyArticle.findUnique({
+        where: { slug: decodedSlug },
+      });
+    }
+
+    // 3. 模糊容错匹配（针对历史截断的 slug 如 faq-%e5%91%a8%e5%b8%b8%e5%92%8c%e6）
+    if (!item) {
+      const cleanTarget = decodedSlug.replace(/^[a-z]+-/, '').toLowerCase();
+      const allArticles = await this.prisma.strategyArticle.findMany({
+        select: { id: true, slug: true, title: true, sourcePath: true },
+      });
+      const matched = allArticles.find((a) => {
+        const aDecoded = safeDecodeUri(a.slug);
+        return (
+          a.slug.toLowerCase().includes(cleanTarget) ||
+          aDecoded.toLowerCase().includes(cleanTarget) ||
+          a.title.toLowerCase().includes(cleanTarget) ||
+          (a.sourcePath && a.sourcePath.toLowerCase().includes(cleanTarget))
+        );
+      });
+      if (matched) {
+        item = await this.prisma.strategyArticle.findUnique({
+          where: { slug: matched.slug },
+        });
+      }
+    }
+
     if (!item) return null;
 
     let contentHtml = item.contentHtml;
@@ -79,12 +161,15 @@ export class StrategiesService {
     let sourceLastModified = item.sourceLastModified;
 
     // 若属于本地 Markdown 手稿，执行即时热重载检查 (以本地文件为绝对权威)
-    if (item.sourceType === 'LOCAL_MARKDOWN' && item.sourcePath) {
-      const workspaceRoot = '/home/guagua/workspace';
-      const fullPath = path.isAbsolute(item.sourcePath)
+    const workspaceRoot =
+      process.env.WORKSPACE_ROOT || path.resolve(process.cwd(), '..');
+    const fullPath = item.sourcePath
+      ? path.isAbsolute(item.sourcePath)
         ? item.sourcePath
-        : path.resolve(workspaceRoot, item.sourcePath);
+        : path.resolve(workspaceRoot, item.sourcePath)
+      : null;
 
+    if (item.sourceType === 'LOCAL_MARKDOWN' && fullPath) {
       let actualPath = fullPath;
       if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
         const dirFiles = fs.readdirSync(fullPath);
@@ -108,7 +193,7 @@ export class StrategiesService {
           contentMarkdown = rawMd;
           sourceLastModified = fileMtime;
 
-          const creatorBase = path.resolve(workspaceRoot, 'project/danke-creator/my-articles-md');
+          const creatorBase = path.resolve(workspaceRoot, 'danke-creator/my-articles-md');
           const articleDir = path.dirname(actualPath);
           const relToCreator = path.relative(creatorBase, articleDir);
 
@@ -138,10 +223,21 @@ export class StrategiesService {
       contentHtml = this.cleanHistoricalHtml(contentHtml);
     }
 
+    // 始终彻底清洗并剥离残留的 Frontmatter 数据头
+    if (contentHtml) {
+      contentHtml = this.stripFrontmatterFromHtml(contentHtml);
+    }
+
+    const highlights = this.safeParse(item.highlights, []);
+    const tag =
+      highlights.find((h: string) => h.includes('(') && h.includes(')')) ||
+      item.categoryLabel;
+
     return {
       id: item.slug,
       slug: item.slug,
       title: item.title,
+      tag,
       category: item.category,
       categoryLabel: item.categoryLabel,
       badge: item.badge,
@@ -286,8 +382,29 @@ export class StrategiesService {
         let summary = `《弹壳特攻队》${articleDirName}全解析`;
         let date = new Date().toISOString().slice(5, 10);
         let highlights: string[] = ['核心机制', '保底精算'];
+        let articleTag: string | undefined;
         let cover: string | undefined = undefined;
-        let slug = `${mapping.category}-${encodeURIComponent(articleDirName).toLowerCase().slice(0, 30)}`;
+        const cleanDirSlug = articleDirName.trim().replace(/[\s\/\\]+/g, '-');
+        let slug = `${mapping.category}-${cleanDirSlug}`;
+
+        if (fs.existsSync(path.join(articlePath, 'cover.png'))) {
+          cover = `/uploads/creator/${folder}/${articleDirName}/cover.png`;
+        } else if (fs.existsSync(path.join(articlePath, 'dist', 'cover.png'))) {
+          cover = `/uploads/creator/${folder}/${articleDirName}/dist/cover.png`;
+        }
+
+        if (fs.existsSync(mdFile)) {
+          try {
+            const content = fs.readFileSync(mdFile, 'utf-8');
+            const tagMatch = content.match(/^tag:\s*["']?([^"'\r\n]+)["']?/m);
+            if (tagMatch) articleTag = tagMatch[1].trim();
+            const lines = content.split('\n');
+            const h1 = lines.find((l) => l.startsWith('# '));
+            if (h1) title = h1.replace(/^#\s*/, '').trim();
+          } catch (e) {
+            // fallback
+          }
+        }
 
         if (fs.existsSync(distJson)) {
           try {
@@ -297,36 +414,28 @@ export class StrategiesService {
             if (data.date) {
               date = data.date.slice(5); // e.g. "09-11"
             }
+            if (data.tag) articleTag = data.tag;
             if (Array.isArray(data.tags)) {
               highlights = data.tags.filter(
                 (t: string) => t !== '弹壳特攻队' && t !== '游戏攻略',
               );
             }
-            if (data.cover) {
-              // 复制或指向相对路径
-              cover = `/assets/articles/${articleDirName}/cover.png`;
-            }
           } catch (err) {
             this.logger.warn(`解析 ${distJson} 失败: ${err.message}`);
           }
-        } else if (fs.existsSync(mdFile)) {
-          try {
-            const content = fs.readFileSync(mdFile, 'utf-8');
-            const lines = content.split('\n');
-            const h1 = lines.find((l) => l.startsWith('# '));
-            if (h1) title = h1.replace(/^#\s*/, '').trim();
-          } catch (e) {
-            // fallback
-          }
-        } else {
+        } else if (!fs.existsSync(mdFile)) {
           continue;
+        }
+
+        if (articleTag) {
+          highlights = [articleTag, ...highlights.filter((h) => h !== articleTag)];
         }
 
         const saved = await this.upsert({
           slug,
           title,
           category: mapping.category,
-          categoryLabel: mapping.label,
+          categoryLabel: articleTag || mapping.label,
           badge: articleDirName.includes('大乱斗') ? 'HOT' : undefined,
           summary,
           readTime: '6 分钟',
@@ -388,35 +497,44 @@ export class StrategiesService {
   ): { html: string; cleanMd: string } {
     if (!rawMd) return { html: '', cleanMd: '' };
 
-    // 1. 剥离开头的 YAML Frontmatter (--- ... ---)
-    let cleanMd = rawMd.replace(/^---\s*[\r\n]+[\s\S]*?[\r\n]+---\s*[\r\n]*/, '');
+    // 1. 使用 gray-matter 剥离开头的 YAML Frontmatter (--- ... ---)
+    let cleanMd = '';
+    try {
+      const parsed = matter(rawMd);
+      cleanMd = parsed.content.trim();
+    } catch {
+      cleanMd = rawMd.replace(/^---\s*[\r\n]+[\s\S]*?[\r\n]+---\s*[\r\n]*/, '').trim();
+    }
 
     // 2. 剥离正文中残留的 img:// 占位符、banner 图与自定义语法后缀
     cleanMd = cleanMd
       .replace(/!\[.*?\]\(\s*img:\/\/[^)]+\s*\)(?:\{[^}]*\})?/gi, '')
-      .replace(/!\[.*?\]\([^)]+\)\s*\{type=[^}]+\}/gi, '')
+      .replace(/(!\[.*?\]\([^)]+\))\s*\{type=[^}]+\}/gi, '$1')
       .replace(/\{type=[^}]+\}/gi, '')
+      .replace(/\{\{([^}]+)\}\}/g, '$1')
       .replace(/^\s*---\s*$/gm, (match, offset) => (offset < 50 ? '' : match)); // 仅剥离文章最开头的孤立分割线
 
     // 3. 将本地相对图片路径重写为 /uploads/creator/...
-    cleanMd = cleanMd.replace(
-      /!\[(.*?)\]\(([^)]+)\)/g,
-      (match, alt, imgPath) => {
-        let p = imgPath.trim();
-        if (
-          p.startsWith('http://') ||
-          p.startsWith('https://') ||
-          p.startsWith('/uploads/')
-        ) {
-          return match;
-        }
-        if (p.startsWith('./')) p = p.slice(2);
-        const normalizedRel = path.join(relToCreator, p).replace(/\\/g, '/');
-        return `![${alt}](/uploads/creator/${normalizedRel})`;
-      },
-    );
+    if (relToCreator) {
+      cleanMd = cleanMd.replace(
+        /!\[(.*?)\]\(([^)]+)\)/g,
+        (match, alt, imgPath) => {
+          let p = imgPath.trim();
+          if (
+            p.startsWith('http://') ||
+            p.startsWith('https://') ||
+            p.startsWith('/uploads/')
+          ) {
+            return match;
+          }
+          if (p.startsWith('./')) p = p.slice(2);
+          const normalizedRel = path.join(relToCreator, p).replace(/\\/g, '/');
+          return `![${alt}](/uploads/creator/${normalizedRel})`;
+        },
+      );
+    }
 
-    const html = marked.parse(cleanMd.trim()) as string;
+    const html = marked.parse(cleanMd.trim(), { gfm: true, breaks: true }) as string;
     return { html, cleanMd };
   }
 
@@ -425,6 +543,22 @@ export class StrategiesService {
    */
   private stripFrontmatterFromHtml(html: string): string {
     if (!html) return '';
-    return html.replace(/<hr>\s*<p>title:\s*&quot;[\s\S]*?<\/ul>/i, '');
+    let clean = html.replace(
+      /^<hr\s*\/?>\s*<p>\s*(?:title|tag|social_title|summary|tags|cover|author|date|lastmod):[\s\S]*?(?:<\/ul>|<\/p>)\s*(?:<hr\s*\/?>)?/i,
+      '',
+    );
+    clean = clean.replace(/^<hr\s*\/?>[\s\S]*?<hr\s*\/?>/i, (match) => {
+      if (
+        match.includes('title:') ||
+        match.includes('summary:') ||
+        match.includes('tag:') ||
+        match.includes('author:') ||
+        match.includes('lastmod:')
+      ) {
+        return '';
+      }
+      return match;
+    });
+    return clean;
   }
 }

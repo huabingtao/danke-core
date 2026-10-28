@@ -1,0 +1,75 @@
+{
+  "groups": [
+    {
+      "group": "军备",
+      "columns": [
+        "获取途径 / 来源A-Z 共 29 途径",
+        "普通钥匙",
+        "高级钥匙",
+        "s级军备钥匙"
+      ]
+    },
+    {
+      "group": "配件",
+      "columns": [
+        "获取途径 / 来源A-Z 共 29 途径",
+        "配件宝箱钥匙"
+      ]
+    },
+    {
+      "group": "宠物",
+      "columns": [
+        "获取途径 / 来源A-Z 共 29 途径",
+        "宠物钥匙",
+        "高级宠物箱钥匙"
+      ]
+    },
+    {
+      "group": "收藏品",
+      "columns": [
+        "获取途径 / 来源A-Z 共 29 途径",
+        "收藏品宝箱钥匙"
+      ]
+    },
+    {
+      "group": "载具",
+      "columns": [
+        "获取途径 / 来源A-Z 共 29 途径",
+        "载具零件钥匙"
+      ]
+    },
+    {
+      "group": "待核实",
+      "columns": [
+        "获取途径 / 来源A-Z 共 29 途径",
+        "其他钥匙（综合）"
+      ]
+    },
+    {
+      "group": "全部钥匙",
+      "columns": [
+        "获取途径 / 来源A-Z 共 29 途径",
+        "普通钥匙",
+        "高级钥匙",
+        "s级军备钥匙",
+        "配件宝箱钥匙",
+        "宠物钥匙",
+        "高级宠物箱钥匙",
+        "收藏品宝箱钥匙",
+        "载具零件钥匙",
+        "其他钥匙（综合）"
+      ]
+    }
+  ],
+  "vehicleCoreImage": {
+    "loaded": true,
+    "width": 128,
+    "height": 114,
+    "source": "/icons/items/载具核心.png"
+  },
+  "coreCategoryIncludesVehicleCore": true,
+  "itemsPageIconVerified": true,
+  "octoberUnverifiedNotice": true,
+  "actualMonthlyTotalNotDisplayed": true,
+  "defaultWindowVerified": true
+}

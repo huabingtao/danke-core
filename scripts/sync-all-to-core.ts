@@ -4,6 +4,9 @@ import Database from 'better-sqlite3';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import * as fs from 'fs';
+import matter from 'gray-matter';
+import { marked } from 'marked';
+import { syncWikiToCore } from './sync-wiki-to-core';
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
@@ -279,21 +282,30 @@ async function main() {
   }
 
   // 3. 扫描 my-articles-md 资源库，自动增量同步真实文章
-  const creatorArticlesPath = path.resolve(
-    __dirname,
-    '../../danke-creator/my-articles-md',
-  );
+  const candidatePaths = [
+    path.resolve(__dirname, '../../../content/danke-creator/my-articles-md'),
+    path.resolve(__dirname, '../../content/danke-creator/my-articles-md'),
+    path.resolve(__dirname, '../../danke-creator/my-articles-md'),
+    path.resolve(process.cwd(), '../../content/danke-creator/my-articles-md'),
+  ];
+  const creatorArticlesPath = candidatePaths.find((p) => fs.existsSync(p)) || candidatePaths[0];
 
   if (fs.existsSync(creatorArticlesPath)) {
     console.log(`\n🔍 正在扫描 creator 资源库: ${creatorArticlesPath}...`);
     const categoryMap: Record<string, { category: string; label: string }> = {
       活动: { category: 'event', label: '活动精算' },
       爆料: { category: 'event', label: '版本爆料' },
+      公会: { category: 'guild', label: '公会攻略' },
       其他: { category: 'faq', label: '避坑指南' },
       区域行动: { category: 'boss', label: '回响 Boss' },
       装备: { category: 'resources', label: '装备深度' },
       配件: { category: 'resources', label: '配件共鸣' },
       宠物: { category: 'resources', label: '战术宠物' },
+      载具: { category: 'resources', label: '载具零件' },
+      逃离行动: { category: 'faq', label: '逃离行动' },
+      联机: { category: 'boss', label: '联机挑战' },
+      收藏品: { category: 'resources', label: '收藏品' },
+      提醒: { category: 'reminder', label: '每日日历' },
     };
 
     const folders = fs.readdirSync(creatorArticlesPath);
@@ -304,8 +316,8 @@ async function main() {
       if (!fs.statSync(folderPath).isDirectory()) continue;
 
       const mapping = categoryMap[folder] || {
-        category: 'event',
-        label: folder,
+        category: folder === '提醒' ? 'reminder' : 'event',
+        label: folder === '提醒' ? '每日日历' : folder,
       };
 
       const articleDirs = fs.readdirSync(folderPath);
@@ -313,18 +325,74 @@ async function main() {
         const articlePath = path.join(folderPath, articleDirName);
         if (!fs.statSync(articlePath).isDirectory()) continue;
 
-        const distJson = path.join(
+        let distJson = path.join(
           articlePath,
           'dist',
           '攻略_stage3_wechat.json',
         );
-        const mdFile = path.join(articlePath, '攻略.md');
+        if (!fs.existsSync(distJson) && fs.existsSync(path.join(articlePath, 'dist'))) {
+          const jsonCandidates = fs
+            .readdirSync(path.join(articlePath, 'dist'))
+            .filter((f) => f.endsWith('_stage3_wechat.json') || (f.endsWith('.json') && !f.startsWith('.')));
+          if (jsonCandidates.length > 0) {
+            distJson = path.join(articlePath, 'dist', jsonCandidates[0]);
+          }
+        }
+
+        let mdFile = path.join(articlePath, '攻略.md');
+        if (!fs.existsSync(mdFile)) {
+          const mdCandidates = fs
+            .readdirSync(articlePath)
+            .filter((f) => f.endsWith('.md') && !f.startsWith('.'));
+          if (mdCandidates.length > 0) {
+            mdFile = path.join(articlePath, mdCandidates[0]);
+          }
+        }
 
         let title = articleDirName;
         let summary = `《弹壳特攻队》${articleDirName}全解析`;
         let date = '09-11';
         let highlights: string[] = ['核心机制', '保底精算'];
-        const slug = `${mapping.category}-${encodeURIComponent(articleDirName).toLowerCase().slice(0, 30)}`;
+        let articleTag: string | undefined;
+        let cover: string | undefined;
+        let contentMarkdown: string | undefined;
+        let contentHtml: string | undefined;
+
+        // 默认缩略图指向文章目录下的 cover.png
+        if (fs.existsSync(path.join(articlePath, 'cover.png'))) {
+          cover = `/uploads/creator/${folder}/${articleDirName}/cover.png`;
+        } else if (fs.existsSync(path.join(articlePath, 'dist', 'cover.png'))) {
+          cover = `/uploads/creator/${folder}/${articleDirName}/dist/cover.png`;
+        }
+
+        if (fs.existsSync(mdFile)) {
+          try {
+            const content = fs.readFileSync(mdFile, 'utf-8');
+            const parsed = matter(content);
+            const tagMatch = content.match(/^tag:\s*["']?([^"'\r\n]+)["']?/m);
+            if (tagMatch) {
+              articleTag = tagMatch[1].trim().replace(/\([a-zA-Z-]+\)/g, '');
+            } else if (parsed.data?.tag) {
+              articleTag = String(parsed.data.tag).replace(/\([a-zA-Z-]+\)/g, '').trim();
+            }
+
+            let cleanBody = parsed.content.trim();
+            cleanBody = cleanBody
+              .replace(/!\[.*?\]\(\s*img:\/\/[^)]+\s*\)(?:\{[^}]*\})?/gi, '')
+              .replace(/(!\[.*?\]\([^)]+\))\s*\{[^}]+\}/gi, '$1')
+              .replace(/\{type=[^}]+\}/gi, '')
+              .replace(/\{\{([^}]+)\}\}/g, '$1');
+
+            contentMarkdown = cleanBody;
+            contentHtml = marked.parse(cleanBody, { gfm: true, breaks: true }) as string;
+
+            const lines = cleanBody.split('\n');
+            const h1 = lines.find((l) => l.startsWith('# '));
+            if (h1) title = h1.replace(/^#\s*/, '').trim();
+          } catch (e) {
+            // ignore
+          }
+        }
 
         if (fs.existsSync(distJson)) {
           try {
@@ -332,53 +400,76 @@ async function main() {
             if (data.title) title = data.title;
             if (data.summary) summary = data.summary;
             if (data.date) date = data.date.slice(5);
+            if (data.tag) articleTag = String(data.tag).replace(/\([a-zA-Z-]+\)/g, '').trim();
             if (Array.isArray(data.tags)) {
-              highlights = data.tags.filter(
-                (t: string) => t !== '弹壳特攻队' && t !== '游戏攻略',
-              );
+              highlights = data.tags
+                .map((t: string) => String(t).replace(/\([a-zA-Z-]+\)/g, '').trim())
+                .filter(
+                  (t: string) => t !== '弹壳特攻队' && t !== '游戏攻略' && Boolean(t),
+                );
             }
           } catch (e) {
             // ignore
           }
-        } else if (fs.existsSync(mdFile)) {
-          try {
-            const content = fs.readFileSync(mdFile, 'utf-8');
-            const lines = content.split('\n');
-            const h1 = lines.find((l) => l.startsWith('# '));
-            if (h1) title = h1.replace(/^#\s*/, '').trim();
-          } catch (e) {
-            // ignore
-          }
-        } else {
+        }
+
+        if (!fs.existsSync(distJson) && !fs.existsSync(mdFile)) {
           continue;
         }
+
+        const isReminderArticle =
+          folder === '提醒' ||
+          articleDirName.startsWith('26.') ||
+          title.includes('日历') ||
+          title.includes('每日事项') ||
+          title.includes('每日提醒');
+
+        const finalCategory = isReminderArticle ? 'reminder' : mapping.category;
+        const finalCategoryLabel = isReminderArticle
+          ? '每日日历'
+          : (articleTag || mapping.label).replace(/\([a-zA-Z-]+\)/g, '').trim();
+
+        if (articleTag && !isReminderArticle) {
+          highlights = [articleTag, ...highlights.filter((h) => h !== articleTag)];
+        }
+
+        const cleanDirSlug = articleDirName.trim().replace(/[\s\/\\]+/g, '-');
+        const slug = `${finalCategory}-${cleanDirSlug}`;
 
         await prisma.strategyArticle.upsert({
           where: { slug },
           update: {
             title,
-            category: mapping.category,
-            categoryLabel: mapping.label,
+            category: finalCategory,
+            categoryLabel: finalCategoryLabel,
             badge: articleDirName.includes('大乱斗') ? '最新' : undefined,
             summary,
             readTime: '6 分钟',
             views: '1.2w',
             date,
             highlights: JSON.stringify(highlights),
+            cover,
+            contentMarkdown,
+            contentHtml,
+            sourceType: 'LOCAL_MARKDOWN',
             sourcePath: path.relative(process.cwd(), articlePath),
             enabled: true,
           },
           create: {
             slug,
             title,
-            category: mapping.category,
-            categoryLabel: mapping.label,
+            category: finalCategory,
+            categoryLabel: finalCategoryLabel,
             badge: articleDirName.includes('大乱斗') ? '最新' : undefined,
             summary,
             readTime: '6 分钟',
             views: '1.2w',
             date,
             highlights: JSON.stringify(highlights),
+            cover,
+            contentMarkdown,
+            contentHtml,
+            sourceType: 'LOCAL_MARKDOWN',
             sourcePath: path.relative(process.cwd(), articlePath),
             enabled: true,
           },
@@ -389,6 +480,9 @@ async function main() {
     }
     console.log(`\n🎉 资源库扫描完成，共同步 ${syncedCount} 篇真实文章到 danke-core！`);
   }
+
+  // 4. 同步 Wiki 图鉴词条、养成消耗矩阵与前端静态兜底资产
+  await syncWikiToCore(prisma);
 
   console.log('\n✨ 所有数据初始化与同步全部完成！');
 }

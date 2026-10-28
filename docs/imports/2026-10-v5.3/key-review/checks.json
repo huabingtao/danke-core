@@ -1,0 +1,17 @@
+{
+  "tests": {
+    "fullSuite": 36,
+    "newExportScenario": 1,
+    "passed": 37
+  },
+  "typecheck": "passed",
+  "productionBuild": "passed (webpack static export)",
+  "mechanicalUIInspection": [],
+  "apiOrSchemaChanged": false,
+  "quantityCorrections": [],
+  "pendingRewardRecords": 24,
+  "verifiedFreeMonthlyAmount": null,
+  "reason": "没有足够当前版本第一手奖励明细；保持未知而不是零。",
+  "browserVerification": "browser-verification.json",
+  "preservation": "preservation.json"
+}

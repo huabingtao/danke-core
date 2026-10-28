@@ -1,0 +1,613 @@
+{
+  "mode": "PREVIEW",
+  "rulesFile": "/Users/hbt/my-project/danke-core/docs/imports/2026-10-v5.3/key-review/user-rules.json",
+  "rulesSha256": "c4ece63b6f73b53325781e831c18f889e702db32576cbc6ae2a69045b08dc81d",
+  "backupPath": null,
+  "newSources": [
+    "公会探索徽章进度",
+    "公会探索Boss奖励",
+    "通行证（档位待确认）",
+    "永久特权卡",
+    "试炼之路",
+    "主线搬砖"
+  ],
+  "changes": [
+    {
+      "action": "delete_superseded_key",
+      "before": {
+        "id": "0347fb28-551e-4bc9-84f8-d468a83ca5eb",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "sourceId": "488cb3e9-11bd-4cb8-9ae7-166c658857b0",
+        "eventId": null,
+        "amount": 152.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：工会远征第一阶段难度12以上",
+        "createdAt": "2026-10-20T11:19:19.035+00:00",
+        "updatedAt": "2026-10-20T11:19:19.035+00:00"
+      },
+      "after": null
+    },
+    {
+      "action": "delete_superseded_key",
+      "before": {
+        "id": "12f5099d-19bc-4d6f-96b4-4daba1fe1c70",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "sourceId": "1cdd0031-2a62-46ea-b97b-87b36a72accb",
+        "eventId": null,
+        "amount": 90.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：逃离行动",
+        "createdAt": "2026-10-20T11:19:19.062+00:00",
+        "updatedAt": "2026-10-20T11:19:19.062+00:00"
+      },
+      "after": null
+    },
+    {
+      "action": "delete_superseded_key",
+      "before": {
+        "id": "1300b3cb-7114-4291-ac36-cd0d0161bcb5",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "sourceId": "e66af0ef-8eac-46b8-9689-c682c8cb9ac5",
+        "eventId": null,
+        "amount": 95.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：通行证免费",
+        "createdAt": "2026-10-20T11:19:19.066+00:00",
+        "updatedAt": "2026-10-20T11:19:19.066+00:00"
+      },
+      "after": null
+    },
+    {
+      "action": "delete_superseded_key",
+      "before": {
+        "id": "3a444e16-2de3-4034-84cc-61d50e58603d",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "sourceId": "0013614c-fb2a-4877-a55e-ee4a949f7550",
+        "eventId": null,
+        "amount": 60.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：潮汐秘境",
+        "createdAt": "2026-10-20T11:19:19.075+00:00",
+        "updatedAt": "2026-10-20T11:19:19.075+00:00"
+      },
+      "after": null
+    },
+    {
+      "action": "delete_superseded_key",
+      "before": {
+        "id": "77c44b6e-b110-4529-9ae2-7c91ae82deef",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "sourceId": "b347f001-4735-4f20-90b8-dbefd03cee0a",
+        "eventId": null,
+        "amount": 90.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：工会商店兑换",
+        "createdAt": "2026-10-20T11:19:19.042+00:00",
+        "updatedAt": "2026-10-20T11:19:19.042+00:00"
+      },
+      "after": null
+    },
+    {
+      "action": "delete_superseded_key",
+      "before": {
+        "id": "a350d029-28e9-4a02-aa74-ee9f69734a3b",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "sourceId": "bf9639e3-4e37-43e4-a9e2-11ca0a7f3169",
+        "eventId": null,
+        "amount": 240.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：工会远征第二阶段",
+        "createdAt": "2026-10-20T11:19:19.035+00:00",
+        "updatedAt": "2026-10-20T11:19:19.035+00:00"
+      },
+      "after": null
+    },
+    {
+      "action": "delete_superseded_key",
+      "before": {
+        "id": "a36c66a3-2462-4192-a0c6-33c1949a7567",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "sourceId": "999b37e1-7b79-45b7-adbb-4c89452fdb4a",
+        "eventId": null,
+        "amount": 220.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：任务好礼",
+        "createdAt": "2026-10-20T11:19:19.069+00:00",
+        "updatedAt": "2026-10-20T11:19:19.069+00:00"
+      },
+      "after": null
+    },
+    {
+      "action": "delete_superseded_key",
+      "before": {
+        "id": "d48b8819-15b1-4251-8320-0cecfc383fae",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "sourceId": "41862f39-8bfa-433c-aa6d-59c052c1c5ef",
+        "eventId": null,
+        "amount": 45.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：试炼之路+永久卡",
+        "createdAt": "2026-10-20T11:19:19.064+00:00",
+        "updatedAt": "2026-10-20T11:19:19.064+00:00"
+      },
+      "after": null
+    },
+    {
+      "action": "delete_superseded_key",
+      "before": {
+        "id": "d88b2bed-d71c-4276-976a-4264286a0917",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "sourceId": "f144e2a3-23e8-4baa-8b52-b3297fb89bf1",
+        "eventId": null,
+        "amount": 48.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：区域（待更新）；原图标注：待更新",
+        "createdAt": "2026-10-20T11:19:19.056+00:00",
+        "updatedAt": "2026-10-20T11:19:19.056+00:00"
+      },
+      "after": null
+    },
+    {
+      "action": "delete_superseded_key",
+      "before": {
+        "id": "d88b544a-8226-4742-8200-61c047e854bb",
+        "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+        "sourceId": "ce37dffa-4f9e-4cc3-88f7-9f40d263861f",
+        "eventId": null,
+        "amount": 24.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：工会探索",
+        "createdAt": "2026-10-20T11:19:19.045+00:00",
+        "updatedAt": "2026-10-20T11:19:19.045+00:00"
+      },
+      "after": null
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "b347f001-4735-4f20-90b8-dbefd03cee0a",
+        "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+        "amount": 30,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"guild-shop\",\"rewardKind\":\"REFERENCE\",\"description\":\"四种钥匙各30，本次按月内合计录入，不按旧来源WEEKLY标签再乘4；公会币预算、兑换是否可同时满足需自行确认。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"30 × 1 = 30\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "b347f001-4735-4f20-90b8-dbefd03cee0a",
+        "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+        "amount": 30,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"guild-shop\",\"rewardKind\":\"REFERENCE\",\"description\":\"四种钥匙各30，本次按月内合计录入，不按旧来源WEEKLY标签再乘4；公会币预算、兑换是否可同时满足需自行确认。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"30 × 1 = 30\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "b347f001-4735-4f20-90b8-dbefd03cee0a",
+        "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+        "amount": 30,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"guild-shop\",\"rewardKind\":\"REFERENCE\",\"description\":\"四种钥匙各30，本次按月内合计录入，不按旧来源WEEKLY标签再乘4；公会币预算、兑换是否可同时满足需自行确认。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"30 × 1 = 30\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "update",
+      "before": {
+        "id": "a283b98d-860f-4eed-aa90-1606d20fd8e6",
+        "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+        "sourceId": "b347f001-4735-4f20-90b8-dbefd03cee0a",
+        "eventId": null,
+        "amount": 30.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：工会商店兑换",
+        "createdAt": "2026-10-20T11:19:19.041+00:00",
+        "updatedAt": "2026-10-20T11:19:19.041+00:00"
+      },
+      "after": {
+        "sourceId": "b347f001-4735-4f20-90b8-dbefd03cee0a",
+        "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+        "amount": 30,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"guild-shop\",\"rewardKind\":\"REFERENCE\",\"description\":\"四种钥匙各30，本次按月内合计录入，不按旧来源WEEKLY标签再乘4；公会币预算、兑换是否可同时满足需自行确认。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"30 × 1 = 30\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "0013614c-fb2a-4877-a55e-ee4a949f7550",
+        "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+        "amount": 20,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"tide\",\"rewardKind\":\"REFERENCE\",\"description\":\"按口述四种各20录入本月，原图载具28和综合60由本次规则替代；实际活动周期未提供，不自行乘算。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"20 × 1 = 20\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "0013614c-fb2a-4877-a55e-ee4a949f7550",
+        "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+        "amount": 20,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"tide\",\"rewardKind\":\"REFERENCE\",\"description\":\"按口述四种各20录入本月，原图载具28和综合60由本次规则替代；实际活动周期未提供，不自行乘算。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"20 × 1 = 20\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "update",
+      "before": {
+        "id": "42e4ff67-d3f4-4e0c-a09e-c744097359b6",
+        "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+        "sourceId": "0013614c-fb2a-4877-a55e-ee4a949f7550",
+        "eventId": null,
+        "amount": 28.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：潮汐秘境",
+        "createdAt": "2026-10-20T11:19:19.075+00:00",
+        "updatedAt": "2026-10-20T11:19:19.075+00:00"
+      },
+      "after": {
+        "sourceId": "0013614c-fb2a-4877-a55e-ee4a949f7550",
+        "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+        "amount": 20,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"tide\",\"rewardKind\":\"REFERENCE\",\"description\":\"按口述四种各20录入本月，原图载具28和综合60由本次规则替代；实际活动周期未提供，不自行乘算。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"20 × 1 = 20\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "0013614c-fb2a-4877-a55e-ee4a949f7550",
+        "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+        "amount": 20,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"tide\",\"rewardKind\":\"REFERENCE\",\"description\":\"按口述四种各20录入本月，原图载具28和综合60由本次规则替代；实际活动周期未提供，不自行乘算。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"20 × 1 = 20\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "0d92e033-1add-5fd0-b02c-a944cc1c90a8",
+        "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+        "amount": 8,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"exploration-badges\",\"rewardKind\":\"REFERENCE\",\"description\":\"徽章进度每周2把零件钥匙，按4周为8把；与Boss奖励分开。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"2 × 4 = 8\",\"period\":\"WEEKLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "439eede1-ac21-5f60-81d6-c94d36b7f80c",
+        "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+        "amount": 16,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"exploration-boss\",\"rewardKind\":\"REFERENCE\",\"description\":\"Boss奖励每周4把零件钥匙，按4周为16把。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"4 × 4 = 16\",\"period\":\"WEEKLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "f144e2a3-23e8-4baa-8b52-b3297fb89bf1",
+        "itemId": "b6d98def-2a6b-490c-8684-2d3b55346c31",
+        "amount": 28,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"zone\",\"rewardKind\":\"REFERENCE\",\"description\":\"区域行动高级宠物箱钥匙28、S级军备钥匙28，按口述月内合计。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"28 × 1 = 28\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "f144e2a3-23e8-4baa-8b52-b3297fb89bf1",
+        "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+        "amount": 28,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"zone\",\"rewardKind\":\"REFERENCE\",\"description\":\"区域行动高级宠物箱钥匙28、S级军备钥匙28，按口述月内合计。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"28 × 1 = 28\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "1cdd0031-2a62-46ea-b97b-87b36a72accb",
+        "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+        "amount": 30,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"escape\",\"rewardKind\":\"REFERENCE\",\"description\":\"S级、配件、收藏品、零件四种各30，按口述月内合计。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"30 × 1 = 30\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "1cdd0031-2a62-46ea-b97b-87b36a72accb",
+        "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+        "amount": 30,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"escape\",\"rewardKind\":\"REFERENCE\",\"description\":\"S级、配件、收藏品、零件四种各30，按口述月内合计。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"30 × 1 = 30\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "1cdd0031-2a62-46ea-b97b-87b36a72accb",
+        "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+        "amount": 30,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"escape\",\"rewardKind\":\"REFERENCE\",\"description\":\"S级、配件、收藏品、零件四种各30，按口述月内合计。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"30 × 1 = 30\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "update",
+      "before": {
+        "id": "5baa757c-0950-47c9-848a-0e75cc294692",
+        "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+        "sourceId": "1cdd0031-2a62-46ea-b97b-87b36a72accb",
+        "eventId": null,
+        "amount": 30.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：逃离行动",
+        "createdAt": "2026-10-20T11:19:19.061+00:00",
+        "updatedAt": "2026-10-20T11:19:19.061+00:00"
+      },
+      "after": {
+        "sourceId": "1cdd0031-2a62-46ea-b97b-87b36a72accb",
+        "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+        "amount": 30,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"escape\",\"rewardKind\":\"REFERENCE\",\"description\":\"S级、配件、收藏品、零件四种各30，按口述月内合计。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"30 × 1 = 30\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "50816fe8-08aa-5ff3-989f-8e3ecaaa644c",
+        "itemId": "300b257c-461f-4c77-90d8-3ec2808db8d5",
+        "amount": 6,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"season-pass\",\"rewardKind\":\"REFERENCE\",\"description\":\"高级宝箱钥匙映射已有高级钥匙；6+3+7+10+90=116，旧综合95由本次明细替代。\",\"conditions\":\"免费档或付费档尚未确认，不能因旧途径名含“免费”而认定零氪可得。\",\"formula\":\"6 × 1 = 6\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "50816fe8-08aa-5ff3-989f-8e3ecaaa644c",
+        "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+        "amount": 3,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"season-pass\",\"rewardKind\":\"REFERENCE\",\"description\":\"高级宝箱钥匙映射已有高级钥匙；6+3+7+10+90=116，旧综合95由本次明细替代。\",\"conditions\":\"免费档或付费档尚未确认，不能因旧途径名含“免费”而认定零氪可得。\",\"formula\":\"3 × 1 = 3\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "50816fe8-08aa-5ff3-989f-8e3ecaaa644c",
+        "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+        "amount": 7,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"season-pass\",\"rewardKind\":\"REFERENCE\",\"description\":\"高级宝箱钥匙映射已有高级钥匙；6+3+7+10+90=116，旧综合95由本次明细替代。\",\"conditions\":\"免费档或付费档尚未确认，不能因旧途径名含“免费”而认定零氪可得。\",\"formula\":\"7 × 1 = 7\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "50816fe8-08aa-5ff3-989f-8e3ecaaa644c",
+        "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+        "amount": 10,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"season-pass\",\"rewardKind\":\"REFERENCE\",\"description\":\"高级宝箱钥匙映射已有高级钥匙；6+3+7+10+90=116，旧综合95由本次明细替代。\",\"conditions\":\"免费档或付费档尚未确认，不能因旧途径名含“免费”而认定零氪可得。\",\"formula\":\"10 × 1 = 10\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "50816fe8-08aa-5ff3-989f-8e3ecaaa644c",
+        "itemId": "07391bda-cca0-46f6-8fc1-6a8f2c713dc7",
+        "amount": 90,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"season-pass\",\"rewardKind\":\"REFERENCE\",\"description\":\"高级宝箱钥匙映射已有高级钥匙；6+3+7+10+90=116，旧综合95由本次明细替代。\",\"conditions\":\"免费档或付费档尚未确认，不能因旧途径名含“免费”而认定零氪可得。\",\"formula\":\"90 × 1 = 90\",\"period\":\"MONTHLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "999b37e1-7b79-45b7-adbb-4c89452fdb4a",
+        "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+        "amount": 59,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"task-gifts\",\"rewardKind\":\"REFERENCE\",\"description\":\"每期59，四种各一期，合计236；不是每种每周59。具体轮换顺序未给，不据此生成实际排期。\",\"conditions\":\"按用户指定四周四种各一期的轮换参考模型；实际十月排期及免费领取条件尚未核对。\",\"formula\":\"59 × 1 = 59\",\"period\":\"FOUR_TYPE_ROTATION\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "999b37e1-7b79-45b7-adbb-4c89452fdb4a",
+        "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+        "amount": 59,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"task-gifts\",\"rewardKind\":\"REFERENCE\",\"description\":\"每期59，四种各一期，合计236；不是每种每周59。具体轮换顺序未给，不据此生成实际排期。\",\"conditions\":\"按用户指定四周四种各一期的轮换参考模型；实际十月排期及免费领取条件尚未核对。\",\"formula\":\"59 × 1 = 59\",\"period\":\"FOUR_TYPE_ROTATION\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "999b37e1-7b79-45b7-adbb-4c89452fdb4a",
+        "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+        "amount": 59,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"task-gifts\",\"rewardKind\":\"REFERENCE\",\"description\":\"每期59，四种各一期，合计236；不是每种每周59。具体轮换顺序未给，不据此生成实际排期。\",\"conditions\":\"按用户指定四周四种各一期的轮换参考模型；实际十月排期及免费领取条件尚未核对。\",\"formula\":\"59 × 1 = 59\",\"period\":\"FOUR_TYPE_ROTATION\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "999b37e1-7b79-45b7-adbb-4c89452fdb4a",
+        "itemId": "b6d98def-2a6b-490c-8684-2d3b55346c31",
+        "amount": 59,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"task-gifts\",\"rewardKind\":\"REFERENCE\",\"description\":\"每期59，四种各一期，合计236；不是每种每周59。具体轮换顺序未给，不据此生成实际排期。\",\"conditions\":\"按用户指定四周四种各一期的轮换参考模型；实际十月排期及免费领取条件尚未核对。\",\"formula\":\"59 × 1 = 59\",\"period\":\"FOUR_TYPE_ROTATION\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "0ffbddd9-a00d-506c-a70a-79de9cc83dae",
+        "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+        "amount": 31,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"permanent-card\",\"rewardKind\":\"ENTITLEMENT\",\"description\":\"每天1把收藏品钥匙，十月按31天为31把。\",\"conditions\":\"需已持有永久特权卡；权益奖励单列，不计为零氪稳定产出。\",\"formula\":\"1 × 31 = 31\",\"period\":\"DAILY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "488cb3e9-11bd-4cb8-9ae7-166c658857b0",
+        "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+        "amount": 240,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"expedition-one\",\"rewardKind\":\"ESTIMATE\",\"description\":\"新口述每周60，四周240，覆盖旧每月60的解释。难度浮动，采用用户选定的中位参考值，非统计中位数；旧途径名称“难度12以上”不作为本次奖励适用难度证据。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"60 × 4 = 240\",\"period\":\"WEEKLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "bf9639e3-4e37-43e4-a9e2-11ca0a7f3169",
+        "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+        "amount": 240,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"expedition-two\",\"rewardKind\":\"ESTIMATE\",\"description\":\"每周3次，每次参考20，四周12次共240；单次30封顶仅作上限说明，不按30计算。覆盖旧月度70规则。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"20 × 12 = 240\",\"period\":\"WEEKLY_BATTLES\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "update",
+      "before": {
+        "id": "408b901f-4dd0-4b94-8b7c-80d846d9abeb",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "sourceId": "8a6da8b5-18ee-44bc-a65a-0b2f4bde64cb",
+        "eventId": null,
+        "amount": 120.0,
+        "month": 10,
+        "year": 2026,
+        "notes": "5.3版本图片统计；原图途径：巡逻掉落",
+        "createdAt": "2026-10-20T11:19:19.081+00:00",
+        "updatedAt": "2026-10-20T11:19:19.081+00:00"
+      },
+      "after": {
+        "sourceId": "8a6da8b5-18ee-44bc-a65a-0b2f4bde64cb",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "amount": 93,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"patrol\",\"rewardKind\":\"RANDOM\",\"description\":\"每天随机合计3把，十月参考93；候选为S级、配件、收藏品，不平均分摊，不承诺每日固定掉落。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"3 × 31 = 93\",\"period\":\"DAILY\",\"weeks\":4,\"days\":31,\"candidates\":[\"s级军备钥匙\",\"配件宝箱钥匙\",\"收藏品宝箱钥匙\"]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "4d3b2efa-1e6a-5d9f-9cc3-fbb8e5497b81",
+        "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+        "amount": 20,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"trial\",\"rewardKind\":\"ESTIMATE\",\"description\":\"用户补充确认收藏品钥匙；每周排行榜加爬塔合计参考5，四周20。进度与排名影响奖励，不当作保证收益。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"5 × 4 = 20\",\"period\":\"WEEKLY\",\"weeks\":4,\"days\":31,\"candidates\":[]}",
+        "year": 2026,
+        "month": 10
+      }
+    },
+    {
+      "action": "insert",
+      "before": null,
+      "after": {
+        "sourceId": "c2643e2f-ea07-5d1f-b685-d54fa13338da",
+        "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+        "amount": 93,
+        "notes": "{\"kind\":\"KEY_RULE_V2\",\"ruleId\":\"mainline-farming\",\"rewardKind\":\"RANDOM\",\"description\":\"用户补充确认随机S级、配件、收藏品；每天合计参考3，十月93。不替代“主线+挑战更新，按照5关”的更新通关奖励；两者是否存在重叠仍待核实。\",\"conditions\":\"需满足玩法参与、兑换及领取条件；口述参考，未独立核实。\",\"formula\":\"3 × 31 = 93\",\"period\":\"DAILY\",\"weeks\":4,\"days\":31,\"candidates\":[\"s级军备钥匙\",\"配件宝箱钥匙\",\"收藏品宝箱钥匙\"]}",
+        "year": 2026,
+        "month": 10
+      }
+    }
+  ],
+  "referenceByKey": {
+    "s级军备钥匙": 417,
+    "配件宝箱钥匙": 386,
+    "收藏品宝箱钥匙": 193,
+    "载具零件钥匙": 104,
+    "高级宠物箱钥匙": 87,
+    "高级钥匙": 6,
+    "普通钥匙": 90,
+    "其他钥匙（综合）": 186
+  },
+  "referenceByKind": {
+    "REFERENCE": 752,
+    "ENTITLEMENT": 31,
+    "ESTIMATE": 500,
+    "RANDOM": 186
+  },
+  "protectedRowsSha256Before": "00f34275945da07bed79e178d16e9f7e04d812bfee0c9ec95371fef04bc5e963",
+  "protectedRowsSha256After": "00f34275945da07bed79e178d16e9f7e04d812bfee0c9ec95371fef04bc5e963",
+  "augustRecords": 104,
+  "referenceRecordCount": 31,
+  "note": "仅用户口述参考，包含权益和随机估计；不是零氪稳定月产出。未覆盖原图记录保持不变。"
+}

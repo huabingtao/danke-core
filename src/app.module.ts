@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { ReminderModule } from './modules/reminder/reminder.module';
 import { AgentsModule } from './agents/agents.module';
 import { StrategiesModule } from './strategies/strategies.module';
+import { WikiModule } from './wiki/wiki.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { StrategiesModule } from './strategies/strategies.module';
     ReminderModule,
     AgentsModule,
     StrategiesModule,
+    WikiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

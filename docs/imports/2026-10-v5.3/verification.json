@@ -1,0 +1,211 @@
+{
+  "mode": "applied",
+  "completedAt": "2026-10-20T11:19:19.108Z",
+  "databasePath": "/Users/hbt/my-project/danke-core/data/danke.db",
+  "backupPath": "/Users/hbt/.local/state/danke-core/import-backups/2026-10-v5.3-1792495158985-363bce71-0e72-4872-9eb0-fb74ad558354.db",
+  "year": 2026,
+  "month": 10,
+  "fixtureSha256": "ad9cf29905011759a1ea75cc3d41fb8a0cbc13e35f1b690f4cf99ca2be6e57e2",
+  "sourceImageSha256": "cb94a7013e44d430d820776643e162e418d3db5683f256915cdff5dd64598fd2",
+  "createdItems": 2,
+  "createdSources": 3,
+  "createdYields": 127,
+  "updatedYields": 0,
+  "unchangedYields": 0,
+  "importedRecords": 127,
+  "totalItems": 28,
+  "totalSources": 29,
+  "octoberRecords": 127,
+  "augustRecords": 104,
+  "protectedBefore": "ea0209bff96e6565c961fb6b94b296979c8d6b2ee040fe74ec1be091f89fbc2f",
+  "protectedAfter": "ea0209bff96e6565c961fb6b94b296979c8d6b2ee040fe74ec1be091f89fbc2f",
+  "existingMetadataUnchanged": true,
+  "totals": [
+    {
+      "name": "s杰出装备",
+      "actual": 28,
+      "imageTotal": 28,
+      "expectedTotal": 28,
+      "matchesExpected": true
+    },
+    {
+      "name": "史诗配件",
+      "actual": 44,
+      "imageTotal": 44,
+      "expectedTotal": 44,
+      "matchesExpected": true
+    },
+    {
+      "name": "杰出配件",
+      "actual": 19,
+      "imageTotal": 19,
+      "expectedTotal": 19,
+      "matchesExpected": true
+    },
+    {
+      "name": "史诗宠物",
+      "actual": 12,
+      "imageTotal": 12,
+      "expectedTotal": 12,
+      "matchesExpected": true
+    },
+    {
+      "name": "杰出宠物",
+      "actual": 15,
+      "imageTotal": 15,
+      "expectedTotal": 15,
+      "matchesExpected": true
+    },
+    {
+      "name": "觉醒水晶",
+      "actual": 110,
+      "imageTotal": 110,
+      "expectedTotal": 110,
+      "matchesExpected": true
+    },
+    {
+      "name": "sp特工万能碎片",
+      "actual": 20,
+      "imageTotal": 20,
+      "expectedTotal": 20,
+      "matchesExpected": true
+    },
+    {
+      "name": "s特工碎片",
+      "actual": 390,
+      "imageTotal": 390,
+      "expectedTotal": 390,
+      "matchesExpected": true
+    },
+    {
+      "name": "传奇载具碎片",
+      "actual": 25,
+      "imageTotal": 25,
+      "expectedTotal": 25,
+      "matchesExpected": true
+    },
+    {
+      "name": "史诗收藏品",
+      "actual": 43,
+      "imageTotal": 43,
+      "expectedTotal": 43,
+      "matchesExpected": true
+    },
+    {
+      "name": "杰出收藏品",
+      "actual": 13,
+      "imageTotal": 13,
+      "expectedTotal": 13,
+      "matchesExpected": true
+    },
+    {
+      "name": "高级收藏之心",
+      "actual": 40,
+      "imageTotal": 40,
+      "expectedTotal": 40,
+      "matchesExpected": true
+    },
+    {
+      "name": "传奇收藏品",
+      "actual": 8,
+      "imageTotal": 8,
+      "expectedTotal": 8,
+      "matchesExpected": true
+    },
+    {
+      "name": "载具零件钥匙",
+      "actual": 142,
+      "imageTotal": 114,
+      "expectedTotal": 142,
+      "matchesExpected": true
+    },
+    {
+      "name": "其他钥匙（综合）",
+      "actual": 1777,
+      "imageTotal": 1777,
+      "expectedTotal": 1777,
+      "matchesExpected": true
+    },
+    {
+      "name": "神器核心",
+      "actual": 3.5,
+      "imageTotal": 3.5,
+      "expectedTotal": 3.5,
+      "matchesExpected": true
+    },
+    {
+      "name": "异宠核心",
+      "actual": 2,
+      "imageTotal": 2,
+      "expectedTotal": 2,
+      "matchesExpected": true
+    },
+    {
+      "name": "谐振芯片",
+      "actual": 4,
+      "imageTotal": 4,
+      "expectedTotal": 4,
+      "matchesExpected": true
+    },
+    {
+      "name": "特工核心",
+      "actual": 5,
+      "imageTotal": 5,
+      "expectedTotal": 5,
+      "matchesExpected": true
+    },
+    {
+      "name": "自选核心",
+      "actual": 13.9,
+      "imageTotal": 13.9,
+      "expectedTotal": 13.9,
+      "matchesExpected": true
+    }
+  ],
+  "pending": [
+    {
+      "topic": "载具零件钥匙合计",
+      "imageTotal": 114,
+      "rowTotal": 142,
+      "difference": 28,
+      "decision": "保留原图各行数量；潮汐秘境28纳入录入，原图合计差异待用户决定。"
+    },
+    {
+      "topic": "载具核心",
+      "decision": "仅补建道具，图标及产出待用户提供。"
+    },
+    {
+      "topic": "新增途径分类",
+      "decision": "派对/连锁礼包、潮汐秘境暂归待分类，实际周期待确认。"
+    }
+  ],
+  "apiVerification": {
+    "passed": true,
+    "octoberRecords": 127,
+    "augustRecords": 104,
+    "participatingSources": 28,
+    "allColumnTotalsMatch": true,
+    "monthlyReportReturned": true,
+    "vehicleCoreHasNoInventedYield": true
+  },
+  "isolatedTests": {
+    "preflightReadOnly": true,
+    "idempotency": {
+      "passed": true,
+      "unchangedRecords": 127,
+      "allRecordsAndTimestampsUnchanged": true
+    },
+    "rollback": {
+      "passed": true,
+      "failureInjectedAtAmount": 240,
+      "allBusinessRowsUnchanged": true
+    }
+  },
+  "browserVerification": {
+    "passed": true,
+    "all20ColumnTotalsMatch": true,
+    "augustOctoberSeparationVerified": true,
+    "partyRowVerified": true,
+    "screenshot": "admin-october.png"
+  }
+}

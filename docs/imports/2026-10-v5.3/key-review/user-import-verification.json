@@ -1,0 +1,30 @@
+{
+  "status": "API_AND_COMPONENT_VERIFIED",
+  "routeHttpStatus": 200,
+  "referenceRecords": 31,
+  "referenceByKey": {
+    "普通钥匙": 90,
+    "配件宝箱钥匙": 386,
+    "高级钥匙": 6,
+    "载具零件钥匙": 104,
+    "收藏品宝箱钥匙": 193,
+    "高级宠物箱钥匙": 87,
+    "s级军备钥匙": 417,
+    "其他钥匙（综合）": 186
+  },
+  "randomUnallocated": 186,
+  "permanentCardEntitlement": 31,
+  "legacyUnverified": 647,
+  "octoberRecords": 144,
+  "augustRecords": 104,
+  "augustRowsAndTimestampsUnchanged": true,
+  "jsonExactlyMatchesApi": true,
+  "pythonTests": 4,
+  "frontendTests": 40,
+  "focusedFrontendTestsAfterFinalLabels": 13,
+  "typeCheck": "PASSED",
+  "productionBuild": "PASSED",
+  "browserVisualVerification": "BLOCKED_BY_BROWSER_SECURITY_POLICY",
+  "visualVerified": false,
+  "note": "浏览器拒绝打开本地页面，未重试绕过、未生成本次页面截图。所有数量通过只读API回读；分类、说明弹窗、导出和月份切换有组件测试覆盖。"
+}

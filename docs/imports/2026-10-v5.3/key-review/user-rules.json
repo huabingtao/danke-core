@@ -1,0 +1,560 @@
+{
+  "schemaVersion": 2,
+  "status": "READY_FOR_IMPORT",
+  "year": 2026,
+  "month": 10,
+  "provenance": {
+    "kind": "USER_DICTATION",
+    "batch": 2,
+    "date": "2026-10-21",
+    "supersedes": "user-rules.batch-1.json",
+    "description": "以本次最新完整口述及随后试炼/主线种类确认优先，未提供的免费条件不推断。"
+  },
+  "monthBasis": {
+    "weeks": 4,
+    "days": 31,
+    "description": "周奖励按用户指定4周模型，日奖励按十月31天；不是对实际结算日历的确认。"
+  },
+  "aliases": {
+    "S级钥匙": "s级军备钥匙",
+    "S级宝箱钥匙": "s级军备钥匙",
+    "S级军备钥匙": "s级军备钥匙",
+    "配件钥匙": "配件宝箱钥匙",
+    "收藏品钥匙": "收藏品宝箱钥匙",
+    "零件钥匙": "载具零件钥匙",
+    "零件宝箱钥匙": "载具零件钥匙",
+    "高级宝箱钥匙": "高级钥匙"
+  },
+  "displayPolicy": {
+    "label": "用户口述月度参考",
+    "note": "部分数量采用用户选定的难度中位参考口径，不是经样本计算的统计中位数，也不是保证收益；随机、权益、领取条件未确认及旧图数据分别显示。",
+    "stableFreeMonthlyTotal": null,
+    "showHelpBesideTable": true
+  },
+  "rules": [
+    {
+      "id": "guild-shop",
+      "source": {
+        "name": "工会商店兑换",
+        "existingId": "b347f001-4735-4f20-90b8-dbefd03cee0a",
+        "type": "MONTHLY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "工会商店兑换"
+      ],
+      "period": "MONTHLY",
+      "kind": "REFERENCE",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "四种钥匙各30，本次按月内合计录入，不按旧来源WEEKLY标签再乘4；公会币预算、兑换是否可同时满足需自行确认。",
+      "rewards": [
+        {
+          "key": "s级军备钥匙",
+          "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+          "perOccurrence": 30,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 30
+        },
+        {
+          "key": "配件宝箱钥匙",
+          "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+          "perOccurrence": 30,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 30
+        },
+        {
+          "key": "收藏品宝箱钥匙",
+          "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+          "perOccurrence": 30,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 30
+        },
+        {
+          "key": "载具零件钥匙",
+          "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+          "perOccurrence": 30,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 30
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 120
+    },
+    {
+      "id": "tide",
+      "source": {
+        "name": "潮汐秘境",
+        "existingId": "0013614c-fb2a-4877-a55e-ee4a949f7550",
+        "type": "MONTHLY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "潮汐秘境"
+      ],
+      "period": "MONTHLY",
+      "kind": "REFERENCE",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "按口述四种各20录入本月，原图载具28和综合60由本次规则替代；实际活动周期未提供，不自行乘算。",
+      "rewards": [
+        {
+          "key": "收藏品宝箱钥匙",
+          "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+          "perOccurrence": 20,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 20
+        },
+        {
+          "key": "配件宝箱钥匙",
+          "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+          "perOccurrence": 20,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 20
+        },
+        {
+          "key": "载具零件钥匙",
+          "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+          "perOccurrence": 20,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 20
+        },
+        {
+          "key": "s级军备钥匙",
+          "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+          "perOccurrence": 20,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 20
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 80
+    },
+    {
+      "id": "exploration-badges",
+      "source": {
+        "name": "公会探索徽章进度",
+        "existingId": null,
+        "type": "WEEKLY",
+        "category": "公会系统"
+      },
+      "replaceKeySources": [
+        "工会探索",
+        "公会探索徽章进度"
+      ],
+      "period": "WEEKLY",
+      "kind": "REFERENCE",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "徽章进度每周2把零件钥匙，按4周为8把；与Boss奖励分开。",
+      "rewards": [
+        {
+          "key": "载具零件钥匙",
+          "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+          "perOccurrence": 2,
+          "occurrencesInMonth": 4,
+          "monthlyAmount": 8
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 8
+    },
+    {
+      "id": "exploration-boss",
+      "source": {
+        "name": "公会探索Boss奖励",
+        "existingId": null,
+        "type": "WEEKLY",
+        "category": "公会系统"
+      },
+      "replaceKeySources": [
+        "公会探索Boss奖励"
+      ],
+      "period": "WEEKLY",
+      "kind": "REFERENCE",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "Boss奖励每周4把零件钥匙，按4周为16把。",
+      "rewards": [
+        {
+          "key": "载具零件钥匙",
+          "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+          "perOccurrence": 4,
+          "occurrencesInMonth": 4,
+          "monthlyAmount": 16
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 16
+    },
+    {
+      "id": "zone",
+      "source": {
+        "name": "区域",
+        "existingId": "f144e2a3-23e8-4baa-8b52-b3297fb89bf1",
+        "type": "MONTHLY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "区域"
+      ],
+      "period": "MONTHLY",
+      "kind": "REFERENCE",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "区域行动高级宠物箱钥匙28、S级军备钥匙28，按口述月内合计。",
+      "rewards": [
+        {
+          "key": "高级宠物箱钥匙",
+          "itemId": "b6d98def-2a6b-490c-8684-2d3b55346c31",
+          "perOccurrence": 28,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 28
+        },
+        {
+          "key": "s级军备钥匙",
+          "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+          "perOccurrence": 28,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 28
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 56
+    },
+    {
+      "id": "escape",
+      "source": {
+        "name": "逃离行动",
+        "existingId": "1cdd0031-2a62-46ea-b97b-87b36a72accb",
+        "type": "MONTHLY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "逃离行动"
+      ],
+      "period": "MONTHLY",
+      "kind": "REFERENCE",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "S级、配件、收藏品、零件四种各30，按口述月内合计。",
+      "rewards": [
+        {
+          "key": "s级军备钥匙",
+          "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+          "perOccurrence": 30,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 30
+        },
+        {
+          "key": "配件宝箱钥匙",
+          "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+          "perOccurrence": 30,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 30
+        },
+        {
+          "key": "收藏品宝箱钥匙",
+          "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+          "perOccurrence": 30,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 30
+        },
+        {
+          "key": "载具零件钥匙",
+          "itemId": "3f3d798b-fbf6-4d31-8482-439d24cd14ce",
+          "perOccurrence": 30,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 30
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 120
+    },
+    {
+      "id": "season-pass",
+      "source": {
+        "name": "通行证（档位待确认）",
+        "existingId": null,
+        "type": "MONTHLY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "通行证免费",
+        "通行证（档位待确认）"
+      ],
+      "period": "MONTHLY",
+      "kind": "REFERENCE",
+      "conditions": "免费档或付费档尚未确认，不能因旧途径名含“免费”而认定零氪可得。",
+      "description": "高级宝箱钥匙映射已有高级钥匙；6+3+7+10+90=116，旧综合95由本次明细替代。",
+      "rewards": [
+        {
+          "key": "高级钥匙",
+          "itemId": "300b257c-461f-4c77-90d8-3ec2808db8d5",
+          "perOccurrence": 6,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 6
+        },
+        {
+          "key": "收藏品宝箱钥匙",
+          "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+          "perOccurrence": 3,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 3
+        },
+        {
+          "key": "配件宝箱钥匙",
+          "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+          "perOccurrence": 7,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 7
+        },
+        {
+          "key": "s级军备钥匙",
+          "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+          "perOccurrence": 10,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 10
+        },
+        {
+          "key": "普通钥匙",
+          "itemId": "07391bda-cca0-46f6-8fc1-6a8f2c713dc7",
+          "perOccurrence": 90,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 90
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 116
+    },
+    {
+      "id": "task-gifts",
+      "source": {
+        "name": "任务好礼",
+        "existingId": "999b37e1-7b79-45b7-adbb-4c89452fdb4a",
+        "type": "MONTHLY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "任务好礼"
+      ],
+      "period": "FOUR_TYPE_ROTATION",
+      "kind": "REFERENCE",
+      "conditions": "按用户指定四周四种各一期的轮换参考模型；实际十月排期及免费领取条件尚未核对。",
+      "description": "每期59，四种各一期，合计236；不是每种每周59。具体轮换顺序未给，不据此生成实际排期。",
+      "rewards": [
+        {
+          "key": "配件宝箱钥匙",
+          "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+          "perOccurrence": 59,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 59
+        },
+        {
+          "key": "收藏品宝箱钥匙",
+          "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+          "perOccurrence": 59,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 59
+        },
+        {
+          "key": "s级军备钥匙",
+          "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+          "perOccurrence": 59,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 59
+        },
+        {
+          "key": "高级宠物箱钥匙",
+          "itemId": "b6d98def-2a6b-490c-8684-2d3b55346c31",
+          "perOccurrence": 59,
+          "occurrencesInMonth": 1,
+          "monthlyAmount": 59
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 236
+    },
+    {
+      "id": "permanent-card",
+      "source": {
+        "name": "永久特权卡",
+        "existingId": null,
+        "type": "DAILY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "试炼之路+永久卡",
+        "永久特权卡"
+      ],
+      "period": "DAILY",
+      "kind": "ENTITLEMENT",
+      "conditions": "需已持有永久特权卡；权益奖励单列，不计为零氪稳定产出。",
+      "description": "每天1把收藏品钥匙，十月按31天为31把。",
+      "rewards": [
+        {
+          "key": "收藏品宝箱钥匙",
+          "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+          "perOccurrence": 1,
+          "occurrencesInMonth": 31,
+          "monthlyAmount": 31
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 31
+    },
+    {
+      "id": "expedition-one",
+      "source": {
+        "name": "工会远征第一阶段难度12以上",
+        "existingId": "488cb3e9-11bd-4cb8-9ae7-166c658857b0",
+        "type": "WEEKLY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "工会远征第一阶段难度12以上"
+      ],
+      "period": "WEEKLY",
+      "kind": "ESTIMATE",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "新口述每周60，四周240，覆盖旧每月60的解释。难度浮动，采用用户选定的中位参考值，非统计中位数；旧途径名称“难度12以上”不作为本次奖励适用难度证据。",
+      "rewards": [
+        {
+          "key": "配件宝箱钥匙",
+          "itemId": "0ef97418-0303-40ee-9f22-ac410874a450",
+          "perOccurrence": 60,
+          "occurrencesInMonth": 4,
+          "monthlyAmount": 240
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 240
+    },
+    {
+      "id": "expedition-two",
+      "source": {
+        "name": "工会远征第二阶段",
+        "existingId": "bf9639e3-4e37-43e4-a9e2-11ca0a7f3169",
+        "type": "MONTHLY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "工会远征第二阶段"
+      ],
+      "period": "WEEKLY_BATTLES",
+      "kind": "ESTIMATE",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "每周3次，每次参考20，四周12次共240；单次30封顶仅作上限说明，不按30计算。覆盖旧月度70规则。",
+      "rewards": [
+        {
+          "key": "s级军备钥匙",
+          "itemId": "e70fc54d-f393-4e4b-aa73-0303b1e5691a",
+          "perOccurrence": 20,
+          "occurrencesInMonth": 12,
+          "monthlyAmount": 240
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 240
+    },
+    {
+      "id": "patrol",
+      "source": {
+        "name": "巡逻掉落",
+        "existingId": "8a6da8b5-18ee-44bc-a65a-0b2f4bde64cb",
+        "type": "DAILY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "巡逻掉落"
+      ],
+      "period": "DAILY",
+      "kind": "RANDOM",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "每天随机合计3把，十月参考93；候选为S级、配件、收藏品，不平均分摊，不承诺每日固定掉落。",
+      "rewards": [
+        {
+          "key": "其他钥匙（综合）",
+          "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+          "perOccurrence": 3,
+          "occurrencesInMonth": 31,
+          "monthlyAmount": 93
+        }
+      ],
+      "candidates": [
+        "s级军备钥匙",
+        "配件宝箱钥匙",
+        "收藏品宝箱钥匙"
+      ],
+      "monthlyTotal": 93
+    },
+    {
+      "id": "trial",
+      "source": {
+        "name": "试炼之路",
+        "existingId": null,
+        "type": "WEEKLY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "试炼之路+永久卡",
+        "试炼之路"
+      ],
+      "period": "WEEKLY",
+      "kind": "ESTIMATE",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "用户补充确认收藏品钥匙；每周排行榜加爬塔合计参考5，四周20。进度与排名影响奖励，不当作保证收益。",
+      "rewards": [
+        {
+          "key": "收藏品宝箱钥匙",
+          "itemId": "786d73fb-7237-410b-af03-0b22650db980",
+          "perOccurrence": 5,
+          "occurrencesInMonth": 4,
+          "monthlyAmount": 20
+        }
+      ],
+      "candidates": [],
+      "monthlyTotal": 20
+    },
+    {
+      "id": "mainline-farming",
+      "source": {
+        "name": "主线搬砖",
+        "existingId": null,
+        "type": "DAILY",
+        "category": "常规玩法"
+      },
+      "replaceKeySources": [
+        "主线搬砖"
+      ],
+      "period": "DAILY",
+      "kind": "RANDOM",
+      "conditions": "需满足玩法参与、兑换及领取条件；口述参考，未独立核实。",
+      "description": "用户补充确认随机S级、配件、收藏品；每天合计参考3，十月93。不替代“主线+挑战更新，按照5关”的更新通关奖励；两者是否存在重叠仍待核实。",
+      "rewards": [
+        {
+          "key": "其他钥匙（综合）",
+          "itemId": "f4e34406-8c71-4529-ad0b-1ed186e4e0af",
+          "perOccurrence": 3,
+          "occurrencesInMonth": 31,
+          "monthlyAmount": 93
+        }
+      ],
+      "candidates": [
+        "s级军备钥匙",
+        "配件宝箱钥匙",
+        "收藏品宝箱钥匙"
+      ],
+      "monthlyTotal": 93
+    }
+  ],
+  "unresolvedQuestions": [
+    "通行证116把是否全部来自免费档？",
+    "公会商店及潮汐秘境按口述数量录入月内合计，实际周期与预算条件待补。",
+    "任务好礼四种各一期是本次参考模型，实际当月轮换排期、免费条件待核对。",
+    "巡逻和主线各93把的具体种类构成未知，不按比例拆分。",
+    "原图未被本批口述覆盖的钥匙记录保留并单列，尤其主线更新与搬砖是否有重叠。"
+  ],
+  "writeBackPolicy": {
+    "preserveOtherMonths": true,
+    "preserveNonKeyYields": true,
+    "replaceOnlySpecifiedSourceKeys": true,
+    "transactionRequired": true,
+    "backupRequired": true,
+    "doNotUseLegacyImporters": true
+  }
+}

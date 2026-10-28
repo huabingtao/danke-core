@@ -1,0 +1,480 @@
+{
+  "year": 2026,
+  "month": 10,
+  "version": "5.3",
+  "sourceImage": "source.png",
+  "note": "5.3版本图片统计",
+  "expectedRecords": 127,
+  "columns": [
+    {
+      "column": 1,
+      "name": "s杰出装备",
+      "expectedTotal": 28,
+      "imageTotal": 28
+    },
+    {
+      "column": 2,
+      "name": "史诗配件",
+      "expectedTotal": 44,
+      "imageTotal": 44
+    },
+    {
+      "column": 3,
+      "name": "杰出配件",
+      "expectedTotal": 19,
+      "imageTotal": 19
+    },
+    {
+      "column": 4,
+      "name": "史诗宠物",
+      "expectedTotal": 12,
+      "imageTotal": 12
+    },
+    {
+      "column": 5,
+      "name": "杰出宠物",
+      "expectedTotal": 15,
+      "imageTotal": 15
+    },
+    {
+      "column": 6,
+      "name": "觉醒水晶",
+      "expectedTotal": 110,
+      "imageTotal": 110
+    },
+    {
+      "column": 7,
+      "name": "sp特工万能碎片",
+      "expectedTotal": 20,
+      "imageTotal": 20
+    },
+    {
+      "column": 8,
+      "name": "s特工碎片",
+      "expectedTotal": 390,
+      "imageTotal": 390
+    },
+    {
+      "column": 9,
+      "name": "传奇载具碎片",
+      "expectedTotal": 25,
+      "imageTotal": 25
+    },
+    {
+      "column": 10,
+      "name": "史诗收藏品",
+      "expectedTotal": 43,
+      "imageTotal": 43
+    },
+    {
+      "column": 11,
+      "name": "杰出收藏品",
+      "expectedTotal": 13,
+      "imageTotal": 13
+    },
+    {
+      "column": 12,
+      "name": "高级收藏之心",
+      "expectedTotal": 40,
+      "imageTotal": 40
+    },
+    {
+      "column": 13,
+      "name": "传奇收藏品",
+      "expectedTotal": 8,
+      "imageTotal": 8
+    },
+    {
+      "column": 14,
+      "name": "载具零件钥匙",
+      "expectedTotal": 142,
+      "imageTotal": 114
+    },
+    {
+      "column": 15,
+      "name": "其他钥匙（综合）",
+      "expectedTotal": 1777,
+      "imageTotal": 1777
+    },
+    {
+      "column": 16,
+      "name": "神器核心",
+      "expectedTotal": 3.5,
+      "imageTotal": 3.5
+    },
+    {
+      "column": 17,
+      "name": "异宠核心",
+      "expectedTotal": 2,
+      "imageTotal": 2
+    },
+    {
+      "column": 18,
+      "name": "谐振芯片",
+      "expectedTotal": 4,
+      "imageTotal": 4
+    },
+    {
+      "column": 19,
+      "name": "特工核心",
+      "expectedTotal": 5,
+      "imageTotal": 5
+    },
+    {
+      "column": 20,
+      "name": "自选核心",
+      "expectedTotal": 13.9,
+      "imageTotal": 13.9
+    }
+  ],
+  "rows": [
+    {
+      "label": "工会远征第一阶段难度12以上",
+      "sourceName": "工会远征第一阶段难度12以上",
+      "amounts": {
+        "2": 20,
+        "15": 152
+      }
+    },
+    {
+      "label": "工会远征第二阶段",
+      "sourceName": "工会远征第二阶段",
+      "amounts": {
+        "15": 240
+      }
+    },
+    {
+      "label": "工会商店兑换",
+      "sourceName": "工会商店兑换",
+      "amounts": {
+        "1": 2,
+        "2": 4,
+        "3": 4,
+        "4": 2,
+        "5": 4,
+        "6": 40,
+        "8": 20,
+        "10": 4,
+        "11": 4,
+        "13": 2,
+        "14": 30,
+        "15": 90
+      }
+    },
+    {
+      "label": "工会远征排行榜",
+      "sourceName": "工会远征排行榜",
+      "notes": "原图口径：取5核心碎片为平均值",
+      "amounts": {
+        "8": 40,
+        "20": 2
+      }
+    },
+    {
+      "label": "工会探索",
+      "sourceName": "工会探索",
+      "amounts": {
+        "8": 24,
+        "14": 24,
+        "20": 2
+      }
+    },
+    {
+      "label": "通用兑换",
+      "sourceName": "通用兑换",
+      "amounts": {
+        "1": 10,
+        "6": 30,
+        "8": 70,
+        "12": 40,
+        "13": 3,
+        "19": 2
+      }
+    },
+    {
+      "label": "日常挑战",
+      "sourceName": "日常挑战",
+      "amounts": {
+        "16": 1.5
+      }
+    },
+    {
+      "label": "回响日常部分",
+      "sourceName": "回响日常部分",
+      "amounts": {
+        "8": 18
+      }
+    },
+    {
+      "label": "回响结算部分",
+      "sourceName": "回响结算部分",
+      "amounts": {
+        "8": 30,
+        "19": 2
+      }
+    },
+    {
+      "label": "区域（待更新）",
+      "sourceName": "区域",
+      "notes": "原图标注：待更新",
+      "amounts": {
+        "1": 3,
+        "2": 1,
+        "3": 5,
+        "5": 3,
+        "8": 25,
+        "15": 48,
+        "20": 0.6
+      }
+    },
+    {
+      "label": "逃离行动",
+      "sourceName": "逃离行动",
+      "amounts": {
+        "1": 4,
+        "2": 4,
+        "3": 8,
+        "4": 6,
+        "5": 8,
+        "8": 20,
+        "10": 4,
+        "11": 8,
+        "14": 30,
+        "15": 90,
+        "16": 1,
+        "17": 1,
+        "18": 2,
+        "19": 1
+      }
+    },
+    {
+      "label": "试炼之路+永久卡",
+      "sourceName": "试炼之路+永久卡",
+      "amounts": {
+        "15": 45
+      }
+    },
+    {
+      "label": "主线+挑战更新，按照5关",
+      "sourceName": "主线+挑战更新，按照5关",
+      "amounts": {
+        "2": 1,
+        "15": 50
+      }
+    },
+    {
+      "label": "通行证免费",
+      "sourceName": "通行证免费",
+      "amounts": {
+        "8": 3,
+        "15": 95
+      }
+    },
+    {
+      "label": "任务好礼",
+      "sourceName": "任务好礼",
+      "amounts": {
+        "1": 1,
+        "2": 1,
+        "4": 1,
+        "6": 10,
+        "8": 20,
+        "15": 220,
+        "20": 0.5
+      }
+    },
+    {
+      "label": "限时好礼",
+      "sourceName": "限时好礼",
+      "amounts": {
+        "15": 12
+      }
+    },
+    {
+      "label": "派对/连锁礼包",
+      "sourceName": "派对/连锁礼包",
+      "amounts": {
+        "15": 120,
+        "20": 2
+      }
+    },
+    {
+      "label": "联机挑战",
+      "sourceName": "联机挑战",
+      "amounts": {
+        "10": 1,
+        "13": 1,
+        "20": 2
+      }
+    },
+    {
+      "label": "特别行动",
+      "sourceName": "特别行动",
+      "amounts": {
+        "10": 7,
+        "20": 0.4
+      }
+    },
+    {
+      "label": "潮汐秘境",
+      "sourceName": "潮汐秘境",
+      "amounts": {
+        "1": 2,
+        "2": 2,
+        "4": 2,
+        "8": 20,
+        "10": 2,
+        "14": 28,
+        "15": 60,
+        "20": 2.4
+      }
+    },
+    {
+      "label": "工会神秘商人",
+      "sourceName": "工会神秘商人",
+      "amounts": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "8": 10,
+        "10": 1,
+        "11": 1,
+        "13": 1,
+        "20": 1
+      }
+    },
+    {
+      "label": "广告",
+      "sourceName": "广告",
+      "amounts": {
+        "15": 135
+      }
+    },
+    {
+      "label": "巡逻掉落",
+      "sourceName": "巡逻掉落",
+      "amounts": {
+        "8": 60,
+        "15": 120
+      }
+    },
+    {
+      "label": "活动1（配件）",
+      "sourceName": "活动1（配件）",
+      "amounts": {
+        "1": 1,
+        "2": 4,
+        "7": 5,
+        "8": 10,
+        "10": 4,
+        "13": 1,
+        "15": 60,
+        "18": 1
+      }
+    },
+    {
+      "label": "活动2（武器，载具）",
+      "sourceName": "活动2（武器，载具）",
+      "amounts": {
+        "1": 1,
+        "2": 1,
+        "7": 5,
+        "8": 10,
+        "9": 15,
+        "10": 6,
+        "14": 30,
+        "15": 60,
+        "16": 1
+      }
+    },
+    {
+      "label": "活动3（宠物）",
+      "sourceName": "活动3（宠物）",
+      "amounts": {
+        "1": 1,
+        "4": 1,
+        "6": 30,
+        "7": 5,
+        "8": 10,
+        "10": 8,
+        "15": 60,
+        "17": 1
+      }
+    },
+    {
+      "label": "活动4（无进度或兑换）",
+      "sourceName": "活动4（无进度或兑换）",
+      "amounts": {
+        "1": 1,
+        "2": 4,
+        "3": 1,
+        "9": 10,
+        "15": 60,
+        "18": 1
+      }
+    },
+    {
+      "label": "活动5（四合一）",
+      "sourceName": "活动5（四合一）",
+      "amounts": {
+        "1": 1,
+        "2": 1,
+        "7": 5,
+        "10": 6,
+        "15": 60,
+        "20": 1
+      }
+    }
+  ],
+  "createItems": [
+    {
+      "name": "其他钥匙（综合）",
+      "type": "KEY",
+      "icon": "/icons/items/其他钥匙.png",
+      "description": "5.3版本图片中的多种钥匙合并数量；不分摊到军备、宠物等具体钥匙。"
+    },
+    {
+      "name": "载具核心",
+      "type": "CURRENCY",
+      "icon": null,
+      "description": "用户要求补建；图标及产出待补充，不从传奇载具碎片或载具零件钥匙推算。"
+    }
+  ],
+  "createSources": [
+    {
+      "name": "派对/连锁礼包",
+      "type": "EVENT",
+      "category": "待分类",
+      "description": "5.3版本图片录入；实际周期待确认。"
+    },
+    {
+      "name": "潮汐秘境",
+      "type": "EVENT",
+      "category": "待分类",
+      "description": "5.3版本图片录入；实际周期待确认。"
+    },
+    {
+      "name": "主线+挑战更新，按照5关",
+      "inheritFrom": "主线+挑战更新，按照10关",
+      "description": "5.3版本图片口径：主线与挑战更新，按照5关统计；与原按照10关途径分开。"
+    }
+  ],
+  "pending": [
+    {
+      "topic": "载具零件钥匙合计",
+      "imageTotal": 114,
+      "rowTotal": 142,
+      "difference": 28,
+      "decision": "保留原图各行数量；潮汐秘境28纳入录入，原图合计差异待用户决定。"
+    },
+    {
+      "topic": "载具核心",
+      "decision": "仅补建道具，图标及产出待用户提供。"
+    },
+    {
+      "topic": "新增途径分类",
+      "decision": "派对/连锁礼包、潮汐秘境暂归待分类，实际周期待确认。"
+    }
+  ]
+}
+

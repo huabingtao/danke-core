@@ -1,0 +1,29 @@
+{
+  "mode": "PREVIEW",
+  "rulesFile": "/Users/hbt/my-project/danke-core/docs/imports/2026-10-v5.3/key-review/user-rules.json",
+  "rulesSha256": "c4ece63b6f73b53325781e831c18f889e702db32576cbc6ae2a69045b08dc81d",
+  "backupPath": null,
+  "newSources": [],
+  "changes": [],
+  "referenceByKey": {
+    "s级军备钥匙": 417,
+    "配件宝箱钥匙": 386,
+    "收藏品宝箱钥匙": 193,
+    "载具零件钥匙": 104,
+    "高级宠物箱钥匙": 87,
+    "高级钥匙": 6,
+    "普通钥匙": 90,
+    "其他钥匙（综合）": 186
+  },
+  "referenceByKind": {
+    "REFERENCE": 752,
+    "ENTITLEMENT": 31,
+    "ESTIMATE": 500,
+    "RANDOM": 186
+  },
+  "protectedRowsSha256Before": "00f34275945da07bed79e178d16e9f7e04d812bfee0c9ec95371fef04bc5e963",
+  "protectedRowsSha256After": "00f34275945da07bed79e178d16e9f7e04d812bfee0c9ec95371fef04bc5e963",
+  "augustRecords": 104,
+  "referenceRecordCount": 31,
+  "note": "仅用户口述参考，包含权益和随机估计；不是零氪稳定月产出。未覆盖原图记录保持不变。"
+}

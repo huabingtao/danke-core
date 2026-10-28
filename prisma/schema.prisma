@@ -183,4 +183,41 @@ model StrategyArticle {
   updatedAt           DateTime  @updatedAt
 }
 
+model WikiEntry {
+  id                  String   @id @default(uuid())
+  slug                String   @unique
+  name                String   @unique
+  category            String   // AGENT | EQUIPMENT | COLLECTIBLE | PET | TECH_PART | MOUNT | MECHANIC
+  subcategory         String?
+  edition             String?  // 第1期 ~ 第10期
+  rarity              String   @default("S") // SS | SP | S | LEGENDARY | EPIC | COMMON
+  tier                String?  // T0 必做 | T1 核心 | 暴击核心 | 暴伤核心
+  icon                String
+  summary             String
+  tags                String   // JSON string array
+  attributes          String   // JSON string object
+  relatedArticleSlugs String   // JSON string array
+  sort                Int      @default(0)
+  enabled             Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model ProgressionMatrix {
+  id                  String   @id @default(uuid())
+  code                String   @unique
+  title               String
+  category            String   // EQUIPMENT | PET | TECH_PART | AGENT | COLLECTIBLE
+  summary             String
+  columns             String   // JSON string array
+  rows                String   // JSON string array
+  recommendations     String   // JSON string array
+  relatedArticleSlug  String?
+  sort                Int      @default(0)
+  enabled             Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+
 

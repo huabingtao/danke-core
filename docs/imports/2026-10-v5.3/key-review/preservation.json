@@ -1,0 +1,26 @@
+{
+  "backupPath": "/Users/hbt/.local/state/danke-core/import-backups/before-key-review-20261020T152623Z.db",
+  "vehicleCoreBefore": {
+    "id": "0f02c065-600c-41de-a061-0c62e4c3537f",
+    "name": "载具核心",
+    "icon": null,
+    "description": "用户要求补建；图标及产出待补充，不从传奇载具碎片或载具零件钥匙推算。"
+  },
+  "monthlyYieldBeforeSha256": "f9d6f7353ee9d8faeb77608fce4c0af1b01f8228778d735d05d130caf36e0304",
+  "monthlyYieldBeforeCount": 231,
+  "imageSha256": "8cfdfdd9d3d8f61c3ce695a92ad0759c6bd04e5d56429874e779c026dc7ad84a",
+  "originalImageUnchanged": true,
+  "vehicleCoreAfter": {
+    "id": "0f02c065-600c-41de-a061-0c62e4c3537f",
+    "name": "载具核心",
+    "icon": "/icons/items/载具核心.png",
+    "description": "用户提供的载具核心图标已补齐；产出数量待补充，不从碎片或钥匙推算。"
+  },
+  "monthlyYieldAfterSha256": "f9d6f7353ee9d8faeb77608fce4c0af1b01f8228778d735d05d130caf36e0304",
+  "monthlyYieldAfterCount": 231,
+  "allYieldRowsAndTimestampsUnchanged": true,
+  "augustRecords": 104,
+  "octoberRecords": 127,
+  "vehicleCoreStillHasNoYield": true,
+  "unrelatedTablesUnchanged": true
+}
