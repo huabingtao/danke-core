@@ -91,9 +91,25 @@ async function main() {
   console.log('角色创建成功! ✅');
 
   // 4. 创建用户 (Users) 并加密密码
-  const hashedPassword = await bcrypt.hash('hbt223123', 10);
+  const hashedPassword = await bcrypt.hash('Hbt@223123', 10);
 
   const userAdmin = await prisma.user.create({
+    data: {
+      username: 'dankeguagau',
+      password: hashedPassword,
+      roleId: adminRole.id,
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      username: 'dankeguagua',
+      password: hashedPassword,
+      roleId: adminRole.id,
+    },
+  });
+
+  await prisma.user.create({
     data: {
       username: '弹壳呱呱',
       password: hashedPassword,
@@ -108,7 +124,7 @@ async function main() {
       roleId: assistantRole.id,
     },
   });
-  console.log('测试用户创建成功! ✅ (密码为: hbt223123)');
+  console.log('测试用户创建成功! ✅ (密码为: Hbt@223123)');
 
   // 5. 创建树形结构菜单项 (Menus)
   // 顶级菜单项
