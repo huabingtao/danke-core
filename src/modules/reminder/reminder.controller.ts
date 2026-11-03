@@ -7,8 +7,16 @@ import {
   Body,
   Param,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { ReminderService, CreateReminderDto, UpdateReminderDto } from './reminder.service';
+import {
+  ReminderService,
+  CreateReminderDto,
+  UpdateReminderDto,
+} from './reminder.service';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
+import { PermissionsGuard } from '../../auth/permissions.guard';
+import { RequirePermission } from '../../auth/require-permission.decorator';
 
 @Controller('reminders')
 export class ReminderController {
@@ -34,21 +42,29 @@ export class ReminderController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('reminders:manage')
   async create(@Body() dto: CreateReminderDto) {
     return this.reminderService.create(dto);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('reminders:manage')
   async update(@Param('id') id: string, @Body() dto: UpdateReminderDto) {
     return this.reminderService.update(id, dto);
   }
 
   @Patch(':id/toggle')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('reminders:manage')
   async toggle(@Param('id') id: string) {
     return this.reminderService.toggleEnabled(id);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('reminders:manage')
   async remove(@Param('id') id: string) {
     return this.reminderService.remove(id);
   }

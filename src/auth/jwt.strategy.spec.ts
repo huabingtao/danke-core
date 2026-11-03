@@ -2,10 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { JwtStrategy } from './jwt.strategy';
 import { PrismaService } from '../prisma/prisma.service';
 import { UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 describe('JwtStrategy', () => {
   let strategy: JwtStrategy;
-  let prisma: PrismaService;
 
   const mockUser = {
     id: 'user-1',
@@ -19,6 +19,12 @@ describe('JwtStrategy', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+        {
+          provide: ConfigService,
+          useValue: {
+            getOrThrow: jest.fn().mockReturnValue('test-only-jwt-secret'),
+          },
+        },
         JwtStrategy,
         {
           provide: PrismaService,
@@ -35,7 +41,6 @@ describe('JwtStrategy', () => {
     }).compile();
 
     strategy = module.get<JwtStrategy>(JwtStrategy);
-    prisma = module.get<PrismaService>(PrismaService);
   });
 
   it('should be defined', () => {
@@ -55,6 +60,8 @@ describe('JwtStrategy', () => {
 
   it('should throw UnauthorizedException if user not found', async () => {
     const payload = { sub: 'user-unknown', username: 'unknown' };
-    await expect(strategy.validate(payload)).rejects.toThrow(UnauthorizedException);
+    await expect(strategy.validate(payload)).rejects.toThrow(
+      UnauthorizedException,
+    );
   });
 });

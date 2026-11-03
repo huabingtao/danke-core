@@ -1,8 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SourcesController } from './sources.controller';
 import { SourcesService } from './sources.service';
-import { ApiKeyGuard } from '../common/guards/api-key.guard';
-import { ConfigService } from '@nestjs/config';
 
 describe('SourcesController', () => {
   let controller: SourcesController;
@@ -24,16 +22,8 @@ describe('SourcesController', () => {
             remove: jest.fn().mockResolvedValue(mockSource),
           },
         },
-        {
-          provide: ConfigService,
-          useValue: {
-            get: jest.fn().mockReturnValue('mock_api_key'),
-          },
-        },
       ],
     })
-      .overrideGuard(ApiKeyGuard)
-      .useValue({ canActivate: () => true })
       .compile();
 
     controller = module.get<SourcesController>(SourcesController);

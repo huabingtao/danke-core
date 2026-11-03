@@ -15,6 +15,9 @@ model Item {
   description String?
   stats       String?        // For future damage calculator effects (stringified JSON, e.g. '{"atk": 100}', compatible with MySQL 5.6)
   yields      MonthlyYield[]
+  categories ItemCategoryLink[]
+  resourceTypeId String?
+  resourceType ResourceType? @relation(fields: [resourceTypeId], references: [id], onDelete: SetNull)
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
 }
@@ -66,6 +69,7 @@ model User {
   password  String   // Hashed password using bcrypt
   roleId    String
   role      Role     @relation(fields: [roleId], references: [id])
+  viewPreferences UserViewPreference[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -221,3 +225,34 @@ model ProgressionMatrix {
 
 
 
+
+
+model ItemCategory {
+  id String @id
+  name String
+  sortOrder Int @default(0)
+  items ItemCategoryLink[]
+}
+
+model ResourceType {
+  id String @id
+  name String
+  sortOrder Int @default(0)
+  items Item[]
+}
+
+model ItemCategoryLink {
+  itemId String
+  categoryId String
+  item Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  category ItemCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  @@id([itemId, categoryId])
+}
+
+model UserViewPreference {
+  userId String
+  viewKey String
+  selectedItemIds String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@id([userId, viewKey])
+}

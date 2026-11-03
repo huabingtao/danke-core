@@ -386,8 +386,8 @@ async function main() {
             contentMarkdown = cleanBody;
             contentHtml = marked.parse(cleanBody, { gfm: true, breaks: true }) as string;
 
-            const lines = cleanBody.split('\n');
-            const h1 = lines.find((l) => l.startsWith('# '));
+            const lines: string[] = cleanBody.split('\n');
+            const h1 = lines.find((l: string) => l.startsWith('# '));
             if (h1) title = h1.replace(/^#\s*/, '').trim();
           } catch (e) {
             // ignore

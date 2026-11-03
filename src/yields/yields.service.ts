@@ -1,3 +1,4 @@
+import { mergedInto } from '../items/item-identity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateYieldDto } from './dto/create-yield.dto';
@@ -9,9 +10,17 @@ export class YieldsService {
 
   async createOrUpdate(dto: CreateYieldDto) {
     // 1. 验证物品是否存在
-    const item = await this.prisma.item.findUnique({
+    let item = await this.prisma.item.findUnique({
       where: { id: dto.itemId },
     });
+    const visited = new Set<string>();
+    while (item && mergedInto(item.stats)) {
+      if (visited.has(item.id)) throw new NotFoundException('道具别名无效');
+      visited.add(item.id);
+      item = await this.prisma.item.findUnique({
+        where: { id: mergedInto(item.stats) },
+      });
+    }
     if (!item) {
       throw new NotFoundException(`ID 为 "${dto.itemId}" 的物品不存在`);
     }
@@ -38,7 +47,7 @@ export class YieldsService {
     return this.prisma.monthlyYield.upsert({
       where: {
         itemId_sourceId_month_year: {
-          itemId: dto.itemId,
+          itemId: item.id,
           sourceId: dto.sourceId,
           month: dto.month,
           year: dto.year,
@@ -50,7 +59,7 @@ export class YieldsService {
         notes: dto.notes || null,
       },
       create: {
-        itemId: dto.itemId,
+        itemId: item.id,
         sourceId: dto.sourceId,
         eventId: dto.eventId || null,
         amount: dto.amount,
@@ -76,7 +85,18 @@ export class YieldsService {
       where.month = parseInt(query.month, 10);
     }
     if (query.itemId) {
-      where.itemId = query.itemId;
+      let item = await this.prisma.item.findUnique({
+        where: { id: query.itemId },
+      });
+      const visited = new Set<string>();
+      while (item && mergedInto(item.stats)) {
+        if (visited.has(item.id)) throw new NotFoundException('道具别名无效');
+        visited.add(item.id);
+        item = await this.prisma.item.findUnique({
+          where: { id: mergedInto(item.stats) },
+        });
+      }
+      where.itemId = item?.id ?? query.itemId;
     }
     if (query.sourceId) {
       where.sourceId = query.sourceId;

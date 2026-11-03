@@ -1,0 +1,11 @@
+{
+  "database": "isolated SQLite copy",
+  "multiCategory": true,
+  "atomicUnknownItemRejection": true,
+  "newSessionPreferenceRestoration": true,
+  "accountIsolation": true,
+  "assistantWriteForbidden": true,
+  "ownerInjectionRejected": true,
+  "sourceRenameReadback": true,
+  "anonymousDenied": true
+}

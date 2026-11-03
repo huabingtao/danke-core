@@ -19,7 +19,7 @@ export interface WikiEntryAttributes {
 export interface WikiEntryInput {
   slug: string;
   name: string;
-  category: 'AGENT' | 'EQUIPMENT' | 'COLLECTIBLE' | 'PET' | 'TECH_PART' | 'MOUNT' | 'MECHANIC';
+  category: 'AGENT' | 'EQUIPMENT' | 'COLLECTIBLE' | 'PET' | 'TECH_PART' | 'MOUNT' | 'MECHANIC' | 'BUFF';
   subcategory?: string;
   edition?: string;
   rarity: 'SS' | 'SP' | 'S' | 'LEGENDARY' | 'EPIC' | 'COMMON';
@@ -1536,36 +1536,76 @@ export function buildAllWikiEntries(): WikiEntryInput[] {
   // 6. 载具 (MOUNT)
   const mounts = [
     {
-      name: '幽焰逐影（幽灵狼）',
+      name: '幽焰逐影',
       file: '幽焰逐影.png',
       rarity: 'SS' as const,
       tier: 'T0 顶配主力载具',
-      summary: '通关主线80章后解锁的传奇主力载具（幽灵狼），高星级下提供极强的爆发增伤与横线特效，与末世战马并列两大主力候选。',
-      tags: ['传奇载具', '幽灵狼', '主力出战', '横线特效'],
+      summary: '灾变降临后诞生的特殊实验体，身披幽焰，影随魂行',
+      tags: ['冰缓', '技能伤害', '首领伤害', '护盾增伤'],
+      milestones: [
+        { stage: '填满1条横线之后激活', effect: '对冰缓目标伤害+30%' },
+        { stage: '填满2条横线之后激活', effect: '灵魂收割：幽魂领域和幽焰爆炸每杀死一个小怪和精英或者对首领造成1次伤害，都会获得5层幽魂效果，最多叠加100层，每层幽魂效果+1%技能伤害，死亡会丢失全部幽魂效果' },
+        { stage: '填满3条横线之后激活', effect: '对冰缓目标伤害+70%；对精英/首领伤害+10%' },
+        { stage: '填满4条横线之后激活', effect: '死亡之后会保留50%的幽魂效果' },
+        { stage: '填满5条横线之后激活', effect: '当幽魂效果达到上限时，技能伤害额外+100%' },
+        { stage: '填满6条横线之后激活', effect: '对冰缓目标伤害+100%；护盾增伤+60%' },
+        { stage: '填满7条横线之后激活', effect: '对首领增伤+30%' },
+        { stage: '填满8条横线之后激活', effect: '触发幽焰爆炸时，护盾增伤+120%' },
+      ],
     },
     {
       name: '末世战马',
       file: '末世战马.png',
       rarity: 'SS' as const,
       tier: 'T0 主力候选载具',
-      summary: '强力传奇主力载具（战马），已有培养投入时表现极为扎实；优先铺满零件连成横线激活出战特殊效果。',
-      tags: ['传奇载具', '战马', '主力出战', '横线特效'],
+      summary: '曾经万里挑一的汗血宝马，在感染了E细胞之后却发生了超强的进化',
+      tags: ['毒伤', '技能伤害', '裂伤', '首领伤害'],
+      milestones: [
+        { stage: '填满1条横线之后激活', effect: '对中毒目标伤害+20%' },
+        { stage: '填满2条横线之后激活', effect: '移动速度+2' },
+        { stage: '填满3条横线之后激活', effect: '对中毒目标伤害+40%；技能伤害+50%' },
+        { stage: '填满4条横线之后激活', effect: '每次撞击击杀100个小怪或者撞击5次首领，获得一层充能，每层充能增加30%的技能伤害，最多5层' },
+        { stage: '填满5条横线之后激活', effect: '每层充能还会提供+1的移动速度上限' },
+        { stage: '填满6条横线之后激活', effect: '对中毒目标伤害+60%；对裂伤目标伤害+30%' },
+        { stage: '填满7条横线之后激活', effect: '对中毒目标伤害+80%；对首领增伤+5%' },
+        { stage: '填满8条横线之后激活', effect: '每有160%的对中毒目标伤害就增加5%的对首领增伤，最多25%' },
+      ],
     },
     {
       name: '科技滑板',
       file: '科技滑板.png',
       rarity: 'S' as const,
       tier: 'T1 同步率/过渡载具',
-      summary: '中期过渡载具，退居二线后装满富余零件，通过「同步率」按比例为出战角色提供可观的面板属性继承。',
-      tags: ['过渡载具', '同步率继承', '零件容器'],
+      summary: '最新一代的喷气式防护型滑板，可提供全方位的保护',
+      tags: ['冰缓', '技能伤害', '护盾增伤'],
+      milestones: [
+        { stage: '填满1条横线之后激活', effect: '对冰缓目标伤害+15%；技能伤害+10%' },
+        { stage: '填满2条横线之后激活', effect: '荆棘护盾消耗时有20%的概率不消耗层数' },
+        { stage: '填满3条横线之后激活', effect: '对冰缓目标伤害+25%；技能伤害+15%' },
+        { stage: '填满4条横线之后激活', effect: '获得荆棘护盾时，叠加1层护盾共鸣，每层护盾共鸣使护盾增伤+10%，上限4层' },
+        { stage: '填满5条横线之后激活', effect: '每触发1次冲击波爆炸，对冰缓目标伤害+6%（最高60%）' },
+        { stage: '填满6条横线之后激活', effect: '对冰缓目标伤害+40%；技能伤害+30%' },
+        { stage: '填满7条横线之后激活', effect: '对冰缓目标伤害+60%；技能伤害+45%' },
+        { stage: '填满8条横线之后激活', effect: '护盾共鸣上限+6层' },
+      ],
     },
     {
       name: '电动平衡车',
       file: '电动平衡车.png',
       rarity: 'EPIC' as const,
       tier: 'T2 入门初始载具',
-      summary: '通关80章开启载具系统后的第一台入门载具，先利用手头资源把零件格子铺满连成横线，切忌早期盲目合红拆空槽位。',
-      tags: ['入门载具', '80章解锁', '同步率继承'],
+      summary: '经过科技改造过的电动平衡车，让旅途变的更加安全',
+      tags: ['衰弱', '暴击伤害', '裂伤'],
+      milestones: [
+        { stage: '填满1条横线之后激活', effect: '对衰弱目标伤害+10%' },
+        { stage: '填满2条横线之后激活', effect: '触发技能时额外再发射一次电轮刃' },
+        { stage: '填满3条横线之后激活', effect: '对衰弱目标伤害+15%；暴击伤害+20%' },
+        { stage: '填满4条横线之后激活', effect: '电轮刃命中后，暴击伤害+1%（最高35%）' },
+        { stage: '填满5条横线之后激活', effect: '每触发3次落雷，叠加1层裂伤精通，每层裂伤精通对裂伤目标伤害+2%，上限5层' },
+        { stage: '填满6条横线之后激活', effect: '对衰弱目标伤害+20%；暴击伤害+55%' },
+        { stage: '填满7条横线之后激活', effect: '对衰弱目标伤害+35%；暴击伤害+90%' },
+        { stage: '填满8条横线之后激活', effect: '每层裂伤精通对裂伤目标伤害+4%' },
+      ],
     },
   ];
 
@@ -1582,12 +1622,7 @@ export function buildAllWikiEntries(): WikiEntryInput[] {
       tags: mt.tags,
       attributes: {
         slot: '载具系统（主线第80章解锁）',
-        milestones: [
-          { stage: '零件摆放铁律', effect: '先把所有格子铺满金色零件连成完整横线（横线特效仅出战车生效），多余材料再合红', isKeyNode: true },
-          { stage: '洗练石规则', effect: '紫色及以上可洗练（首次30、二次50、后续80洗练石），维托尔优先洗技能伤害>首领伤害，伊狑优先首领伤害', isKeyNode: true },
-          { stage: '同步率机制', effect: '闲置载具装上的零件按同步率百分比（如60%）提供面板属性，但不触发横线技能' },
-        ],
-        acquisition: '载具碎片合成 / 载具核心升星 / 零件宝箱钥匙抽取',
+        milestones: mt.milestones,
       },
       relatedArticleSlugs: [
         'resources-%e4%bb%8e%e5%85%a5%e9%97%a8%e5%88%b0%e5%85%a5%e5%9c%9f-%e8%bd%bd%e5%85%b7%e7%af%87',
@@ -1803,7 +1838,7 @@ export interface WikiEntryAttributes {
 export interface WikiEntryItem {
   slug: string;
   name: string;
-  category: 'AGENT' | 'EQUIPMENT' | 'COLLECTIBLE' | 'PET' | 'TECH_PART' | 'MOUNT' | 'MECHANIC';
+  category: 'AGENT' | 'EQUIPMENT' | 'COLLECTIBLE' | 'PET' | 'TECH_PART' | 'MOUNT' | 'MECHANIC' | 'BUFF';
   subcategory?: string;
   edition?: string;
   rarity: 'SS' | 'SP' | 'S' | 'LEGENDARY' | 'EPIC' | 'COMMON';

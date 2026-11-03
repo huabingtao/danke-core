@@ -94,14 +94,14 @@ export class ReminderService {
       let desc = '';
       if (rule.routineType === 'DAILY') {
         desc = '每日打卡提醒';
-        daysRemaining = 0;
+        daysRemaining = 1;
         computedStatus = 'ROUTINE_TRIGGER';
       } else if (rule.routineType === 'WEEKLY') {
         const dayName = WEEKDAY_NAMES[rule.weeklyDay ?? 0] || '周日';
         desc = `每周${dayName}打卡提醒`;
         const currentWeekday = normalizedTarget.getDay();
         if (currentWeekday === rule.weeklyDay) {
-          daysRemaining = 0;
+          daysRemaining = 1;
           computedStatus = 'ROUTINE_TRIGGER';
         } else {
           daysRemaining = ((rule.weeklyDay ?? 0) - currentWeekday + 7) % 7;
@@ -319,61 +319,35 @@ export class ReminderService {
           });
         }
       } else if (rule.ruleType === 'ROUTINE') {
+        const isTriggerDay =
+          rule.routineType === 'DAILY' ||
+          (rule.routineType === 'WEEKLY' &&
+            rule.weeklyDay === normalizedTarget.getDay());
+        if (!isTriggerDay) continue;
+
         const note = rule.digestNote?.trim() || null;
-        if (rule.routineType === 'DAILY') {
-          const template = rule.routineTemplate?.trim() || '今日记得打卡';
-          const statusText = template.replace(/\{name\}/g, rule.name);
-          const fullText = note ? `${statusText}（${note}）` : statusText;
-          items.push({
-            id: rule.id,
-            name: rule.name,
-            category: rule.category,
-            ruleType: 'ROUTINE',
-            routineType: 'DAILY',
-            status: 'ROUTINE_TRIGGER',
-            isTriggerDay: true,
-            statusText,
-            digestNote: note,
-            fullText,
-          });
-        } else if (rule.routineType === 'WEEKLY' && rule.weeklyDay !== undefined && rule.weeklyDay !== null) {
-          const currentWeekday = normalizedTarget.getDay();
-          if (currentWeekday === rule.weeklyDay) {
-            const template = rule.routineTemplate?.trim() || '今天是【{name}】打卡日';
-            const statusText = template.replace(/\{name\}/g, rule.name).replace(/\{days\}/g, '0');
-            const fullText = note ? `${statusText}（${note}）` : statusText;
-            items.push({
-              id: rule.id,
-              name: rule.name,
-              category: rule.category,
-              ruleType: 'ROUTINE',
-              routineType: 'WEEKLY',
-              status: 'ROUTINE_TRIGGER',
-              isTriggerDay: true,
-              statusText,
-              digestNote: note,
-              fullText,
-            });
-          } else {
-            const daysUntil = (rule.weeklyDay - currentWeekday + 7) % 7;
-            const template = rule.digestTemplate?.trim() || '离本周【{name}】打卡还剩 {days} 天';
-            const statusText = template.replace(/\{name\}/g, rule.name).replace(/\{days\}/g, String(daysUntil));
-            const fullText = note ? `${statusText}（${note}）` : statusText;
-            items.push({
-              id: rule.id,
-              name: rule.name,
-              category: rule.category,
-              ruleType: 'ROUTINE',
-              routineType: 'WEEKLY',
-              status: 'ACTIVE',
-              daysRemaining: daysUntil,
-              isTriggerDay: false,
-              statusText,
-              digestNote: note,
-              fullText,
-            });
-          }
-        }
+        const template =
+          rule.routineTemplate?.trim() ||
+          (rule.routineType === 'DAILY'
+            ? '今日记得打卡'
+            : '今天是【{name}】打卡日');
+        const statusText = template
+          .replace(/\{name\}/g, rule.name)
+          .replace(/\{days\}/g, '1');
+        const fullText = note ? `${statusText}（${note}）` : statusText;
+        items.push({
+          id: rule.id,
+          name: rule.name,
+          category: rule.category,
+          ruleType: 'ROUTINE',
+          routineType: rule.routineType!,
+          status: 'ROUTINE_TRIGGER',
+          isTriggerDay: true,
+          daysRemaining: 1,
+          statusText,
+          digestNote: note,
+          fullText,
+        });
       }
     }
 
