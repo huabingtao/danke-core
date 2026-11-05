@@ -12,6 +12,7 @@ import { ReminderModule } from './modules/reminder/reminder.module';
 import { AgentsModule } from './agents/agents.module';
 import { StrategiesModule } from './strategies/strategies.module';
 import { WikiModule } from './wiki/wiki.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { WikiModule } from './wiki/wiki.module';
     AgentsModule,
     StrategiesModule,
     WikiModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

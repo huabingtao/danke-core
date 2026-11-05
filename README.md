@@ -1,107 +1,54 @@
-# 《弹壳特攻队》资产与攻略后端数据中心
+# danke-core
 
-这是一个基于 **NestJS 11** 和 **Prisma 7 ORM** 构建的高性能、可扩展后端数据中心。专门用于存储和管理《弹壳特攻队》游戏内的物品、产出途径、活动和月度产出明细，并为攻略网站、微信公众号排版工具和小红书等自媒体生成器提供标准且安全的 JSON API。
+《弹壳特攻队》共享业务 API，负责认证与权限、道具、产出来源、月度产出、提醒规则、特工、攻略元数据、Wiki 和养成矩阵。数据库由 Core 管理；Web 和 Admin 通过 HTTP API 访问业务数据。
 
----
+## 技术栈与运行环境
 
-## 🛠️ 技术栈
-*   **框架**：NestJS 11 + TypeScript
-*   **ORM**：Prisma 7
-*   **数据库**：MySQL (已完美兼容 MySQL 5.6 历史版本)
-*   **驱动适配器**：`@prisma/adapter-mariadb` (启用文本协议兼容老版本)
+- NestJS 11、Prisma 7、SQLite。
+- Node.js 24.18.0（使用工作区已安装的 fnm Node 24）。
+- 默认本地端口 `3001`，默认数据库 URL 为 `file:./data/danke.db`，相对 Core 工作目录解析。
+- Admin/Web 不应直接打开或修改 SQLite 文件。
 
----
+复制 `.env.example` 为本机 `.env`，设置独立的 `JWT_SECRET`。生产环境还必须配置 `CORS_ORIGINS`，只列出实际 Web/Admin 源站；不要把服务端密钥放进前端环境变量或提交到 Git。
 
-## 🚀 快速启动指南
-
-### 1. 准备工作
-确保本地已安装 Node.js (>= 18.0.0)。项目采用纯嵌入式 **SQLite 数据库**，无需安装/启动任何外部 MySQL 服务！
-
-### 2. 配置环境变量
-项目根目录下的 [`.env`](.env) 文件已预置以下配置：
 ```env
 DATABASE_URL="file:./data/danke.db"
 PORT=3001
-ADMIN_API_KEY="danke_super_secret_key_123"
+JWT_SECRET="replace-with-a-private-random-secret"
+CORS_ORIGINS=http://localhost:3002,http://localhost:8004
 ```
 
-### 3. 初始化 SQLite 数据库与客户端
-首次拉取或每次修改 `prisma/schema.prisma` 后运行：
-```bash
-# 1. 生成 Prisma TypeScript 客户端
-npx prisma generate
+缺少 `JWT_SECRET` 时服务拒绝启动。JWT 有效期为一天。
 
-# 2. 自动建表同步至本地 SQLite 数据库文件 (./data/danke.db)
-npx prisma db push
-```
+## 常用命令
 
-### 4. 填充初始测试数据 (Seeding)
-运行以下命令，向您的 SQLite 数据库中自动填充《弹壳特攻队》的全量 RBAC 角色权限、测试账号、菜单结构及初始资产数据：
 ```bash
-npx prisma db seed
-```
-
-### 5. 启动服务
-```bash
-# 启动开发监听模式 (代码修改自动重启)
 npm run start:dev
-
-# 生产构建与启动
+npm test -- --runInBand
 npm run build
-npm run start
+npm run start:prod
 ```
 
----
+`npm run build` 会写入 `dist/`。数据库 schema 或生产数据调整前必须先备份并确认操作方案；禁止对正式库执行 `prisma db push`、reset 或 destructive seed。`prisma/seed.ts` 用于空库演示初始化，会清空多类现存数据，不得对已有业务数据库运行。
 
-## 📊 可视化数据管理 (免代码后台)
+## API 概览
 
-本项目配置了 **Prisma Studio**。您无需编写后台管理页面，只需在终端运行以下命令：
-```bash
-npx prisma studio
-```
-它会在浏览器中自动打开 `http://localhost:5555`，提供一个功能强大的 **Excel 表格级界面**。您可以在这里直接**双击修改**、**直接录入**或**批量删除**特工道具、产出、活动等数据，修改后点击 `Save Changes` 即可保存。
+公开读取接口包括：
 
----
+- `GET /items`、`GET /items/:id`
+- `GET /sources`、`GET /sources/:id`
+- `GET /yields`、`GET /yields/monthly-report?year=YYYY&month=M`
+- `GET /reminders`、`GET /reminders/daily-digest?date=YYYY-MM-DD`
+- `GET /api/agents`、`GET /api/agents/:code`
+- `GET /api/strategies`、`GET /api/strategies/:slug`
+- `GET /api/wiki/entries`、`GET /api/wiki/matrices`
 
-## 🔑 核心接口说明 (APIs)
+认证接口为 `POST /auth/login`、`GET /auth/profile` 和 `POST /auth/change-password`。敏感写接口须携带 `Authorization: Bearer <token>`，由 Core 服务端验证 JWT 与权限；前端菜单或按钮隐藏不构成权限控制。
 
-所有的写接口（`POST`、`DELETE`等）都受 `ApiKeyGuard` 保护，需要在 HTTP Request Header 中携带：
-`x-api-key: danke_super_secret_key_123`
+活动目前只有 Prisma `GameEvent` 模型，CRUD API 尚未实现。文章同步与历史记录仍处于兼容期；不要通过管理 API 或手工 SQL 删除旧记录。
 
-### 1. 物品管理 (Items)
-*   **`GET /items`**：获取物品列表（公开）。
-*   **`POST /items`**（写保护）：创建新物品。
-    *   **Payload 示例**：
-        ```json
-        {
-          "name": "破坏者之力",
-          "type": "EQUIPMENT",
-          "description": "强力S级武器",
-          "stats": { "atk": 500, "description": "发射黑洞吸引敌人" }
-        }
-        ```
-        > **💡 说明**：`stats` 会在存库时自动序列化，返回时自动解析为 JSON 对象，方便未来伤害计算器直接使用。
+## 兼容说明
 
-### 2. 产出明细与报表 (Yields)
-*   **`GET /yields`**：获取扁平明细列表（公开）。支持 `year`、`month`、`itemId`、`sourceId` 过滤。
-*   **`GET /yields/monthly-report?year=2026&month=7`**：获取**结构化聚合报表**（公开）。
-    *   **返回格式**：将产出途径作为 `columns`（列），物品作为 `rows`（行），并在交叉点给出对应数值和行总计。直接供给攻略网站渲染表格。
-*   **`POST /yields`**（写保护）：新增或覆盖更新单项月度产出数值。
-
----
-
-## 🔍 故障排查与 Debug 手册
-
-### Q1：启动时报错 `P1000: Authentication failed against database server`
-*   **原因**：`.env` 中的 MySQL 密码不正确，或者用户名不对。
-*   **解决方法**：打开 `.env` 文件，检查 `DATABASE_URL` 中的 `root:hbt223123` 密码是否与您本地 MySQL 的 root 密码完全一致，修改后保存重新运行。
-
-### Q2：启动时报错 `Port 3000 is already in use`
-*   **原因**：3000 端口已被其他服务占用。
-*   **解决方法**：
-    1. 修改 `.env` 文件中的 `PORT=3000` 为其他端口（如 `PORT=3001`）。
-    2. 或者在终端运行 `kill -9 $(lsof -t -i:3000)` 杀掉占用端口的进程。
-
-### Q3：插入中文物品或产出途径时报错 `Incorrect string value`
-*   **原因**：本地 MySQL 数据库默认字符集是 `latin1` 等非 UTF-8 字符集，或者连接编码不对。
-*   **解决方法**：确保 `.env` 中的 `DATABASE_URL` 结尾带有 `?charset=utf8mb4` 字段，且创建数据库时使用了 `utf8mb4` 字符集。
+- Wiki、攻略和特工 API 保留 `/api/...` 与已有别名，逐步替换旧同步链路时不随意改路径。
+- CORS 只允许 `CORS_ORIGINS` 中列出的浏览器来源；CORS 不替代身份认证和权限校验。
+- `.env`、数据库、备份和部署密钥均为环境数据，不提交到仓库。

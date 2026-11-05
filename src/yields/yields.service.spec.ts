@@ -79,7 +79,9 @@ describe('YieldsService', () => {
       };
       const res = await service.createOrUpdate(dto);
       expect(res).toEqual(mockYield);
-      expect(prisma.monthlyYield.upsert).toHaveBeenCalled();
+      expect(
+        (prisma.monthlyYield.upsert as jest.Mock).mock.calls.length,
+      ).toBeGreaterThan(0);
     });
 
     it('should throw NotFoundException if item not found', async () => {
@@ -90,7 +92,9 @@ describe('YieldsService', () => {
         month: 8,
         year: 2026,
       };
-      await expect(service.createOrUpdate(dto)).rejects.toThrow(NotFoundException);
+      await expect(service.createOrUpdate(dto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
 
     it('should throw NotFoundException if source not found', async () => {
@@ -101,7 +105,9 @@ describe('YieldsService', () => {
         month: 8,
         year: 2026,
       };
-      await expect(service.createOrUpdate(dto)).rejects.toThrow(NotFoundException);
+      await expect(service.createOrUpdate(dto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
 
     it('should throw NotFoundException if eventId provided but event not found', async () => {
@@ -113,15 +119,49 @@ describe('YieldsService', () => {
         month: 8,
         year: 2026,
       };
-      await expect(service.createOrUpdate(dto)).rejects.toThrow(NotFoundException);
+      await expect(service.createOrUpdate(dto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
+  });
+
+  it('writes through an old alias ID into the existing canonical yield slot', async () => {
+    const alias = {
+      ...mockItem,
+      id: 'alias',
+      stats: '{"_mergedInto":"item-1"}',
+    };
+    jest
+      .spyOn(prisma.item, 'findUnique')
+      .mockImplementation(
+        ({ where }: any) =>
+          Promise.resolve(where.id === 'alias' ? alias : mockItem) as any,
+      );
+    await service.createOrUpdate({
+      itemId: 'alias',
+      sourceId: 'source-1',
+      amount: 7,
+      month: 8,
+      year: 2026,
+    });
+    expect(
+      (prisma.monthlyYield.upsert as jest.Mock).mock.calls[0][0].where
+        .itemId_sourceId_month_year.itemId,
+    ).toBe('item-1');
   });
 
   describe('findAll', () => {
     it('should return yields filtered by query', async () => {
-      const res = await service.findAll({ year: '2026', month: '8', itemId: 'item-1', sourceId: 'source-1' });
+      const res = await service.findAll({
+        year: '2026',
+        month: '8',
+        itemId: 'item-1',
+        sourceId: 'source-1',
+      });
       expect(res).toEqual([mockYield]);
-      expect(prisma.monthlyYield.findMany).toHaveBeenCalled();
+      expect(
+        (prisma.monthlyYield.findMany as jest.Mock).mock.calls.length,
+      ).toBeGreaterThan(0);
     });
   });
 

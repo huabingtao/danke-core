@@ -1,5 +1,8 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, UseGuards } from '@nestjs/common';
 import { AgentsService, AgentDto } from './agents.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { PermissionsGuard } from '../auth/permissions.guard';
+import { RequirePermission } from '../auth/require-permission.decorator';
 
 @Controller(['api/agents', 'agents'])
 export class AgentsController {
@@ -16,6 +19,8 @@ export class AgentsController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermission('agent:manage')
   upsert(@Body() dto: AgentDto) {
     return this.agentsService.upsert(dto);
   }

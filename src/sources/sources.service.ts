@@ -1,5 +1,6 @@
 import {
   Injectable,
+  BadRequestException,
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
@@ -44,6 +45,10 @@ export class SourcesService {
   }
 
   async update(id: string, dto: UpdateSourceDto) {
+    if (dto.name !== undefined) {
+      dto.name = dto.name.trim();
+      if (!dto.name) throw new BadRequestException('来源名称不能为空');
+    }
     const existing = await this.findOne(id);
 
     if (dto.name && dto.name !== existing.name) {
@@ -69,4 +74,3 @@ export class SourcesService {
     });
   }
 }
-

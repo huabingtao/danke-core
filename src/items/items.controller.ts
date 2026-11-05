@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
@@ -22,7 +23,7 @@ export class ItemsController {
   @Post()
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @RequirePermission('item:create')
-  create(@Body() createItemDto: CreateItemDto) {
+  create(@Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true })) createItemDto: CreateItemDto) {
     return this.itemsService.create(createItemDto);
   }
 
@@ -39,7 +40,7 @@ export class ItemsController {
   @Patch(':id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @RequirePermission('item:create')
-  update(@Param('id') id: string, @Body() updateItemDto: UpdateItemDto) {
+  update(@Param('id') id: string, @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true })) updateItemDto: UpdateItemDto) {
     return this.itemsService.update(id, updateItemDto);
   }
 
