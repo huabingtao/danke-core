@@ -2,6 +2,7 @@
 Example: python3 scripts/import-gem-reference.py --database /tmp/test.db --manifest /path/manifest.json --report /tmp/report.json --apply
 """
 import argparse,datetime,json,sqlite3,uuid,hashlib
+import os
 from pathlib import Path
 parser=argparse.ArgumentParser();parser.add_argument('--database',required=True);parser.add_argument('--manifest',required=True);parser.add_argument('--report',required=True);parser.add_argument('--apply',action='store_true');args=parser.parse_args()
 path=Path(args.database).resolve(strict=True);manifest=json.loads(Path(args.manifest).read_text());now=datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -54,7 +55,7 @@ for p in plans.values():
  elif set(links[p['id']])!=p['categories'] or p['stats']!=current['stats']:
   report['updated'].append({'id':p['id'],'name':p['name'],'previous':current,'previousCategoryIds':links[p['id']],'categoryIds':sorted(p['categories'])})
 if args.apply:
- backup=Path('/home/guagua/workspace/backups/danke-core')/('before-flat-gems-'+datetime.datetime.now().strftime('%Y%m%d-%H%M%S-%f')+'.db');backup.parent.mkdir(parents=True,exist_ok=True)
+ backup=Path(os.environ.get("DANKE_BACKUP_DIR", str(path.parent / "backups"))).expanduser().resolve()/('before-flat-gems-'+datetime.datetime.now().strftime('%Y%m%d-%H%M%S-%f')+'.db');backup.parent.mkdir(parents=True,exist_ok=True)
  with sqlite3.connect(path) as src,sqlite3.connect(backup) as target:
   src.backup(target);assert target.execute('pragma integrity_check').fetchone()[0]=='ok'
  report['backup']=str(backup)

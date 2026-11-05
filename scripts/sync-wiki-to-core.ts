@@ -1183,8 +1183,9 @@ export function buildAllWikiEntries(): WikiEntryInput[] {
 
   // 3. 收藏品 (COLLECTIBLE) - 扫描第1~10期传奇收藏品 & 史诗收藏品
   const candidatePackRoots = [
+    ...(process.env.DANKE_ASSET_PACK ? [path.resolve(process.env.DANKE_ASSET_PACK, "assets/img")] : []),
     path.resolve(__dirname, '../../skills/danke-strategy-skill/packs/danke/assets/img'),
-    '/Users/hbt/skills/skills/danke-strategy-skill/packs/danke/assets/img',
+    path.resolve(__dirname, '../../../skills/skills/danke-strategy-skill/packs/danke/assets/img'),
   ];
   const skillPackImgRoot =
     candidatePackRoots.find((p) => fs.existsSync(p)) || candidatePackRoots[0];
@@ -1730,8 +1731,9 @@ export async function syncWikiToCore(prisma: PrismaClient) {
 
   // 1. 镜像静态图标到 danke-web/public/wiki-assets
   const candidateImgDirs = [
+    ...(process.env.DANKE_ASSET_PACK ? [path.resolve(process.env.DANKE_ASSET_PACK, "assets/img")] : []),
     path.resolve(__dirname, '../../skills/danke-strategy-skill/packs/danke/assets/img'),
-    '/Users/hbt/skills/skills/danke-strategy-skill/packs/danke/assets/img',
+    path.resolve(__dirname, '../../../skills/skills/danke-strategy-skill/packs/danke/assets/img'),
   ];
   const srcImgDir =
     candidateImgDirs.find((p) => fs.existsSync(p)) || candidateImgDirs[0];

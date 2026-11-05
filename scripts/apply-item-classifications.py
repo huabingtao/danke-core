@@ -6,10 +6,11 @@ import datetime
 import json
 import sqlite3
 import sys
+import os
 from pathlib import Path
 
 source = Path(sys.argv[1]).resolve(strict=True)
-folder = Path('/home/guagua/workspace/backups/danke-core')
+folder = Path(os.environ.get("DANKE_BACKUP_DIR", str(source.parent / "backups"))).expanduser().resolve()
 folder.mkdir(parents=True, exist_ok=True)
 backup = folder / ('classification-migration-' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S') + '.db')
 with sqlite3.connect(source.as_uri() + '?mode=ro', uri=True) as src, sqlite3.connect(backup) as dst:

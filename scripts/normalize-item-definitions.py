@@ -2,12 +2,14 @@
 Archives only explicitly reviewed aliases with no yield records. Default is dry run.
 """
 import argparse,json,sqlite3,datetime,copy
+import os
 from pathlib import Path
 parser=argparse.ArgumentParser();parser.add_argument('--database',required=True);parser.add_argument('--names',required=True);parser.add_argument('--merges',required=True);parser.add_argument('--report',required=True);parser.add_argument('--apply',action='store_true');args=parser.parse_args()
 path=Path(args.database).resolve(strict=True);names=json.loads(Path(args.names).read_text())['translations'];merges=json.loads(Path(args.merges).read_text())['merges'];stamp=datetime.datetime.now(datetime.timezone.utc).isoformat()
 report={'applied':args.apply,'renamed':[],'merged':[],'skipped':[],'changedLabels':[]}
-backup=Path('/home/guagua/workspace/backups/danke-core')/('before-item-polish-'+datetime.datetime.now().strftime('%Y%m%d-%H%M%S-%f')+'.db')
+backup=Path(os.environ.get("DANKE_BACKUP_DIR", str(path.parent / "backups"))).expanduser().resolve()/('before-item-polish-'+datetime.datetime.now().strftime('%Y%m%d-%H%M%S-%f')+'.db')
 if args.apply:
+ backup.parent.mkdir(parents=True, exist_ok=True)
  with sqlite3.connect(path.as_uri()+'?mode=ro',uri=True) as src,sqlite3.connect(backup) as dst:
   src.backup(dst);assert dst.execute('pragma integrity_check').fetchone()[0]=='ok'
  report['backup']=str(backup)

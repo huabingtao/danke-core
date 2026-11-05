@@ -13,15 +13,15 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { marked } from 'marked';
 
-const WORKSPACE = '/home/guagua/workspace';
-const ARCHIVE_BASE = path.join(WORKSPACE, 'project/danke-creator/archive/wechat-history-p0');
+const WORKSPACE = path.resolve(process.env.DANKE_WORKSPACE_ROOT || path.join(__dirname, '../../..'));
+const ARCHIVE_BASE = path.join(process.env.DANKE_CREATOR_ROOT || path.join(WORKSPACE, 'project/danke-creator'), 'archive/wechat-history-p0');
 const MASTER_JSON = path.join(ARCHIVE_BASE, 'manifests/articles_master.json');
 const MATCH_JSON = path.join(ARCHIVE_BASE, 'manifests/local_match_manifest.json');
 const RAW_DIR = path.join(ARCHIVE_BASE, 'raw_archives');
-const CORE_UPLOADS_HISTORY = path.resolve(process.cwd(), 'public/uploads/history');
-const CREATOR_BASE = path.resolve(WORKSPACE, 'project/danke-creator/my-articles-md');
+const CORE_UPLOADS_HISTORY = path.resolve(__dirname, '../public/uploads/history');
+const CREATOR_BASE = path.join(process.env.DANKE_CREATOR_ROOT || path.join(WORKSPACE, 'project/danke-creator'), 'my-articles-md');
 
-const dbPath = path.resolve(process.cwd(), 'data/danke.db');
+const dbPath = path.resolve(__dirname, '../data/danke.db');
 const adapter = new PrismaBetterSqlite3({ url: dbPath });
 const prisma = new PrismaClient({ adapter });
 
